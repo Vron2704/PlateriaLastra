@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo - Plateria Lastra</title>
+    <link rel="stylesheet" href="styles.css"> 
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <div class="logo">Plateria Lastra</div>
+            <ul class="nav-links">
+                <li><a href="/index.html">Inicio</a></li> 
+                <li><a href="/catalogo.html" class="active">Catálogo</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-title-header">
+            <h2>Nuestro Catálogo</h2>
+            <p>Encuentra la cera perfecta para tu próxima creación.</p>
+        </div>
+
+        <div class="catalog-page-layout">
+
+            <aside class="filter-sidebar">
+                
+                <div class="filter-group">
+                    <h3>Filtrar por Nombre</h3>
+                    <input type="text" id="search-bar" class="search-bar" placeholder="Buscar producto...">
+                </div>
+
+                <div class="filter-group">
+                    <h3>Tipo de Producto</h3>
+                    <ul class="filter-list">
+                        <li>
+                            <input type="checkbox" id="filter-anillo" value="anillo" class="filter-checkbox">
+                            <label for="filter-anillo">Anillos</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="filter-dije" value="dije" class="filter-checkbox">
+                            <label for="filter-dije">Dijes</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="filter-bloque" value="bloque" class="filter-checkbox">
+                            <label for="filter-bloque">Bloques</label>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="filter-group">
+                    <h3>Color / Dureza</h3>
+                    <ul class="filter-list">
+                        <li>
+                            <input type="checkbox" id="filter-verde" value="verde" class="filter-checkbox">
+                            <label for="filter-verde">Verde (Dura)</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="filter-azul" value="azul" class="filter-checkbox">
+                            <label for="filter-azul">Azul (Media)</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="filter-rojo" value="rojo" class="filter-checkbox">
+                            <label for="filter-rojo">Rojo (Blanda)</label>
+                        </li>
+                    </ul>
+                </div>
+
+            </aside>
+
+            <div id="catalogo-container" class="product-grid">
+                <div class="product-grid">
+
+                    <div class="product-card" type="anillo">
+                        <img src="httpsa://via.placeholder.com/300x300.png?text=Cera+Verde+Anillo" alt="Cera verde para anillo">
+                        <h3>Cera Verde "Fidelis" para Anillo</h3>
+                        <p class="description">Alta dureza, ideal para detalles finos.</p>
+                        <button class="cta-button">Más información</button>
+                    </div>
+                 <p id="no-results-message" style="display: none; text-align: center; font-size: 1.2rem; color: #777;">
+                    No se encontraron productos que coincidan con su búsqueda.
+                </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Plateria Lastra. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="/Scrips/client.js"></script>
+</body>
+</html>

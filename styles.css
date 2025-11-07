@@ -1,0 +1,327 @@
+/* ======== ESTILOS GLOBALES ======== */
+:root {
+    --primary-color: #0a4a4a; /* Un color verde azulado oscuro, profesional */
+    --secondary-color: #f4f4f4;
+    --text-color: #333;
+    --bg-color: #ffffff;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* ======== BARRA DE NAVEGACIÓN ======== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    background-color: var(--bg-color);
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    letter-spacing: -1px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    margin: 0 1rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+.nav-icons {
+    display: flex;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.nav-icons span {
+    margin-left: 1rem;
+}
+
+/* ======== SECCIÓN HÉROE ======== */
+.hero {
+    height: 70vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('httpsa://via.placeholder.com/1500x800.png?text=Taller+de+Orfebrería');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+.hero-content {
+    max-width: 600px;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.1); /* Sutil fondo para legibilidad */
+    border-radius: 8px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.cta-button {
+    text-decoration: none;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #073a3a; /* Un tono más oscuro */
+}
+
+/* ======== CATÁLOGO DE PRODUCTOS ======== */
+.product-catalog {
+    padding: 4rem 5%;
+    text-align: center;
+}
+
+.product-catalog h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.product-card {
+    background-color: var(--bg-color);
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.product-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+}
+
+.product-card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 1rem 1rem 0.5rem;
+}
+
+.product-card .description {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0 1rem 0.5rem;
+    height: 40px; /* Fija una altura para alinear botones */
+}
+
+
+
+/* ======== PIE DE PÁGINA ======== */
+footer {
+    background-color: #222;
+    color: #aaa;
+    padding: 3rem 5%;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-section h4 {
+    color: white;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li a {
+    text-decoration: none;
+    color: #aaa;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: white;
+}
+
+.footer-bottom {
+    text-align: center;
+    border-top: 1px solid #444;
+    padding-top: 1.5rem;
+    font-size: 0.9rem;
+}
+/* ======== ESTILOS PÁGINA CATÁLOGO ======== */
+
+/* Título de la página */
+.page-title-header {
+    text-align: center;
+    padding: 2rem 5%;
+    background-color: var(--secondary-color);
+    border-bottom: 1px solid #eee;
+}
+.page-title-header h2 {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin: 0;
+}
+.page-title-header p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-top: 0.5rem;
+}
+
+/* Enlace activo en la navegación */
+.nav-links a.active {
+    color: var(--primary-color);
+    font-weight: bold;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 4px;
+}
+
+/* Diseño principal de la página de catálogo */
+.catalog-page-layout {
+    display: grid;
+    /* Define 2 columnas: 280px para el filtro, 1fr (resto) para productos */
+    grid-template-columns: 280px 1fr;
+    gap: 2rem;
+    padding: 2rem 5%;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+/* ======== BARRA DE FILTROS ======== */
+.filter-sidebar {
+    background-color: var(--bg-color);
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 1.5rem;
+    /* Fija la barra lateral si la página es larga */
+    position: sticky;
+    top: 100px; /* Ajusta esto según la altura de tu navbar */
+    align-self: start; /* Impide que se estire */
+}
+
+.filter-group {
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 1.5rem;
+}
+.filter-group:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.filter-group h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.search-bar {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    box-sizing: border-box; /* Para que el padding no afecte el ancho */
+}
+
+.filter-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.filter-list li {
+    margin-bottom: 0.5rem;
+}
+
+.filter-list label {
+    margin-left: 0.5rem;
+    cursor: pointer;
+    color: #333;
+}
+
+.filter-checkbox {
+    cursor: pointer;
+    /* Acentúa el color del checkbox */
+    accent-color: var(--primary-color);
+}
+
+/* ======== CONTENEDOR DE PRODUCTOS ======== */
+.product-grid-container {
+    /* El .product-grid y .product-card ya tienen estilos del CSS anterior */
+    min-width: 0; /* Arreglo para grids */
+}
+
+/* Adaptación para pantallas más pequeñas (móviles) */
+@media (max-width: 768px) {
+    .catalog-page-layout {
+        /* Apila la barra de filtros y los productos en lugar de 2 columnas */
+        grid-template-columns: 1fr;
+    }
+    
+    .filter-sidebar {
+        position: static; /* Quita la posición fija en móviles */
+        top: auto;
+    }
+}
