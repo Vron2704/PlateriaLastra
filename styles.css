@@ -1,9 +1,13 @@
 /* ======== ESTILOS GLOBALES ======== */
 :root {
-    --primary-color: #0a4a4a; /* Un color verde azulado oscuro, profesional */
+    --primary-color: #1a325a; /* Un color verde azulado oscuro, profesional */
     --secondary-color: #f4f4f4;
     --text-color: #333;
     --bg-color: #ffffff;
+}
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
 body {
@@ -14,25 +18,36 @@ body {
     color: var(--text-color);
     line-height: 1.6;
 }
+header {
+    width: 100%;
+}
 
 /* ======== BARRA DE NAVEGACIÓN ======== */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 5%;
+    padding: 0rem 5%;
     background-color: var(--bg-color);
-    border-bottom: 1px solid #eee;
     position: sticky;
     top: 0;
     z-index: 1000;
+    text-align: center;
+}
+.nav-container {
+    position: relative;
+    display: flex;
+    padding: 1rem;
+    gap: 10px;
+    flex-direction: row;
+    align-items: center;
+}
+.nav-container img {
+    display: block;
 }
 
 .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--primary-color);
-    letter-spacing: -1px;
+    height: 20px;
 }
 
 .nav-links {
@@ -45,77 +60,95 @@ body {
 .nav-links li {
     margin: 0 1rem;
 }
+.nav-links a.active {
+    text-decoration: none;
+}
 
 .nav-links a {
     text-decoration: none;
     color: var(--text-color);
     font-weight: 500;
     transition: color 0.3s ease;
+    position: relative; /* ¡MUY IMPORTANTE! para posicionar el ::after */
+    padding-bottom: 5px;
 }
 
-.nav-links a:hover {
+.nav-links a:hover::after,
+.nav-links a.active::after {
     color: var(--primary-color);
 }
-
-.nav-icons {
-    display: flex;
-    font-size: 1.2rem;
-    cursor: pointer;
+.nav-links a::after {
+    content: ''; /* Obligatorio para que aparezca el pseudo-elemento */
+    position: absolute; /* Lo posiciona relativo al <a> */
+  /* Posición y tamaño de la línea */
+    width: 100%; /* La línea ocupará el 100% del ancho del enlace */
+    height: 2px; /* El grosor de la línea */
+    background-color: #0d5a5f; /* Color verde/teal (aprox. de tu imagen) */
+    left: 0;
+    bottom: 0; /* Lo pega a la parte de abajo del <a> (con el padding) */
+  /* --- 5. La animación (oculto por defecto) --- */
+    transform: scaleX(0); /* Lo "encoge" a 0% de ancho por defecto */
+    transform-origin: center; /* La animación crece desde el centro */
+    transition: transform 0.3s ease-out; /* La animación de "crecimiento" */
 }
-
-.nav-icons span {
-    margin-left: 1rem;
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    transform: scaleX(1); /* "Crece" la línea al 100% de ancho */
+}
+.nav-logo {
+    height: 60px;
 }
 
 /* ======== SECCIÓN HÉROE ======== */
 .hero {
-    height: 70vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('httpsa://via.placeholder.com/1500x800.png?text=Taller+de+Orfebrería');
+    height: 90vh;
+    background-image: url('https://xdblvjdkfnlrcmymujfz.supabase.co/storage/v1/object/public/product-src/background.jpeg');
     background-size: cover;
     background-position: center;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+    justify-content: start;
+    align-items:center;
+    text-align: start;
     color: white;
+    
 }
 
 .hero-content {
-    max-width: 600px;
-    padding: 2rem;
-    background: rgba(0, 0, 0, 0.1); /* Sutil fondo para legibilidad */
-    border-radius: 8px;
-}
+    padding: 4rem 5%;
 
-.hero h1 {
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
 }
 
 .hero p {
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
+    font-family: 'Noto Serif Display', serif;
+    font-size: 5em;
+    font-weight: 700;
+    color: #1a325a;
+    line-height: 1.2;
+    font-stretch: 62.5%;
 }
 
 .cta-button {
     text-decoration: none;
-    background-color: var(--primary-color);
-    color: white;
+    background-color: none;
+    color: rgb(0, 0, 0);
     padding: 0.75rem 1.5rem;
-    border-radius: 5px;
+    border-color: black;
+    border: 1px solid #000000;
+    border-radius: 30px;
     font-weight: bold;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.5s ease;
+    transition: color 0.3s ease;
 }
 
 .cta-button:hover {
-    background-color: #073a3a; /* Un tono más oscuro */
+    background-color: #253b56; /* Un tono más oscuro */
+    color : rgb(255, 255, 255);
 }
 
 /* ======== CATÁLOGO DE PRODUCTOS ======== */
 .product-catalog {
-    padding: 4rem 5%;
-    text-align: center;
+    padding: 4rem 5% 10rem  5%;
+    text-align: center;;
 }
 
 .product-catalog h2 {
@@ -168,7 +201,7 @@ body {
 
 /* ======== PIE DE PÁGINA ======== */
 footer {
-    background-color: #222;
+    background-color: #1a325a;
     color: #aaa;
     padding: 3rem 5%;
 }
@@ -178,7 +211,7 @@ footer {
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 5rem;
 }
 
 .footer-section h4 {
@@ -226,14 +259,6 @@ footer {
     font-size: 1.1rem;
     color: #555;
     margin-top: 0.5rem;
-}
-
-/* Enlace activo en la navegación */
-.nav-links a.active {
-    color: var(--primary-color);
-    font-weight: bold;
-    border-bottom: 2px solid var(--primary-color);
-    padding-bottom: 4px;
 }
 
 /* Diseño principal de la página de catálogo */
