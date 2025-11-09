@@ -24,17 +24,25 @@
                 <span class="bar"></span>
             </button>
         </nav>
-        <ul class="nav-links" id="nav-links-menu">
-                <li class="nav-menu-header">
-                    <span class="menu-title">Menú</span>
-                    <button class="close-menu-btn" id="close-menu-btn" aria-label="Cerrar menú">
-                        &times; </button>
-                </li>
-                <li><a href="/index.html" class="active" class="ref">Inicio</a></li> 
-                <li><a href="/catalogo.html" class="ref">Catálogo</a></li>
-                <li><a href="/nosotros.html" class="ref">Nosotros</a></li>
-        </ul>
-            <div class="overlay" id="overlay"></div>
+            <ul class="nav-links" id="nav-links-menu">
+                    <li class="nav-menu-header">
+                        <span class="menu-title">Menú</span>
+                        <button class="close-menu-btn" id="close-menu-btn" aria-label="Cerrar menú">
+                            &times; </button>
+                    </li>
+                    <li><a href="/index.html" class="active" class="ref">Inicio</a></li> 
+                    <li><a href="/catalogo.html" class="ref">Catálogo</a></li>
+                    <li><a href="/nosotros.html" class="ref">Nosotros</a></li>
+            </ul>
+            <form class="search-form" id="search-form">
+                <input type="search" class="search-input" placeholder="Buscar...">
+                <button type="submit" class="search-button" aria-label="Buscar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M15.5 14h-.79l-.28-.27A6.5 6.5 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                    </svg>
+                </button>
+            </form>
+        <div class="overlay" id="overlay"></div>
     </header>
 
     <main>

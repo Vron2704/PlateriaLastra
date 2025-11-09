@@ -23,19 +23,26 @@
                 <span class="bar"></span>
                 <span class="bar"></span>
             </button>
-                    </nav>
-        <ul class="nav-links" id="nav-links-menu">
-                <li class="nav-menu-header">
-                    <span class="menu-title">Menú</span>
-                    <button class="close-menu-btn" id="close-menu-btn" aria-label="Cerrar menú">
-                        &times; </button>
-                </li>
-                <li><a href="/index.html"  class="ref">Inicio</a></li> 
-                <li><a href="/catalogo.html" class="active" class="ref">Catálogo</a></li>
-                <li><a href="/nosotros.html" class="ref">Nosotros</a></li>
-        </ul>
-            <div class="overlay" id="overlay"></div>
-        </nav> <div class="overlay" id="overlay"></div>
+        </nav>
+            <ul class="nav-links" id="nav-links-menu">
+                    <li class="nav-menu-header">
+                        <span class="menu-title">Menú</span>
+                        <button class="close-menu-btn" id="close-menu-btn" aria-label="Cerrar menú">
+                            &times; </button>
+                    </li>
+                    <li><a href="/index.html">Inicio</a></li> 
+                    <li><a href="/catalogo.html"class="active">Catálogo</a></li>
+                    <li><a href="/nosotros.html">Nosotros</a></li>
+            </ul>
+            <form class="search-form" id="search-form">
+                <input type="search" class="search-input" placeholder="Buscar...">
+                <button type="submit" class="search-button" aria-label="Buscar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M15.5 14h-.79l-.28-.27A6.5 6.5 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                    </svg>
+                </button>
+            </form>
+        <div class="overlay" id="overlay"></div>
     </header>
    
     <main>
@@ -45,51 +52,78 @@
         </div>
 
         <div class="catalog-page-layout">
+            <div class="mobile-filter-bar">
+                <button class="open-filter-btn" id="open-filter-btn">
+                    <span>Filtrar por</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/>
+                    </svg>
+                </button>
+            </div>
 
-            <aside class="filter-sidebar">
-                
-                <div class="filter-group">
-                    <h3>Filtrar por Nombre</h3>
-                    <input type="text" id="search-bar" class="search-bar" placeholder="Buscar producto...">
-                </div>
+            <aside class ="filter-sidebar" id="filter-sidebar">
 
                 <div class="filter-group">
                     <h3>Tipo de Producto</h3>
                     <ul class="filter-list">
                         <li>
-                            <input type="checkbox" id="filter-anillo" value="anillo" class="filter-checkbox">
+                            <input data-group ="tipo_producto" type="checkbox" id="filter-tipo-anillo" value="anillo" class="filter-checkbox">
                             <label for="filter-anillo">Anillos</label>
                         </li>
                         <li>
-                            <input type="checkbox" id="filter-dije" value="dije" class="filter-checkbox">
+                            <input data-group ="tipo_producto" type="checkbox" id="filter-tipo-dije" value="dije" class="filter-checkbox">
                             <label for="filter-dije">Dijes</label>
                         </li>
                     </ul>
                 </div>
-
                 <div class="filter-group">
-                    <h3>Color / Dureza</h3>
+                    <h3>Engaste</h3>
                     <ul class="filter-list">
                         <li>
-                            <input type="checkbox" id="filter-verde" value="verde" class="filter-checkbox">
-                            <label for="filter-verde">Verde (Dura)</label>
+                            <input data-group ="engaste" type="checkbox" id="filter-engaste-con" value="con_piedra" class="filter-checkbox">
+                            <label for="filter-conpiedra">Con piedra</label>
                         </li>
                         <li>
-                            <input type="checkbox" id="filter-azul" value="azul" class="filter-checkbox">
-                            <label for="filter-azul">Azul (Media)</label>
-                        </li>
-                        <li>
-                            <input type="checkbox" id="filter-rojo" value="rojo" class="filter-checkbox">
-                            <label for="filter-rojo">Rojo (Blanda)</label>
-                        </li>
+                            <input data-group ="engaste" type="checkbox" id="filter-engaste-sin" value="sin_piedra" class="filter-checkbox">
+                            <label for="filter-sinpiedra">Sin piedra</label>
+                        </li>                 
                     </ul>
                 </div>
 
+                <div class="filter-group">
+                    <h3>Género</h3>
+                    <ul class="filter-list">
+                        <li>
+                            <input data-group ="genero" type="checkbox" id="filter-masc" value="masculino" class="filter-checkbox">
+                            <label for="filter-masc">Masculino</label>
+                        </li>
+                        <li>
+                            <input data-group ="genero" type="checkbox" id="filter-fem" value="femenino" class="filter-checkbox">
+                            <label for="filter-fem">Femenino</label>
+                        </li>
+                        <li>
+                            <input data-group ="genero" type="checkbox" id="filter-uni" value="unisex" class="filter-checkbox">
+                            <label for="filter-unis">Unisex</label>
+                        </li>                      
+                    </ul>
+                </div>
+                <div class="filter-group">
+                    <h3>Categoria</h3>
+                    <ul class="filter-list" id="lista-categorias-filtro">
+                        <!-- Las categorías se cargarán dinámicamente aquí -->
+                    </ul>
+                </div>
+
+            <div class="filter-actions">
+                <button class="filter-btn-clear" id="filter-btn-clear">Limpiar</button>
+                <button class="filter-btn-apply" id="filter-btn-apply">Aplicar</button>
+            </div>
             </aside>
+            
 
             <div id="catalogo-container" class="product-grid">
                 <div class="product-grid">
-                 <p id="no-results-message" style="display: none; text-align: center; font-size: 1.2rem; color: #777;">
+                <p id="no-results-message" style="display: none; text-align: center; font-size: 1.2rem; color: #777;">
                     No se encontraron productos que coincidan con su búsqueda.
                 </p>
                 </div>
@@ -122,7 +156,7 @@
     </footer>
 
     <script type="module" src="/Scrips/client.js"></script>
-    <script type="module" src="/Scrips/main.js"></script>
+    <script type="module" src="main.js"></script>
 </body>
 </body>
 </html>
