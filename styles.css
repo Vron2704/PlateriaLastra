@@ -28,7 +28,7 @@ header {
     align-items: center;
     padding: 0rem 5%;
     background-color: var(--bg-color);
-    position: sticky;
+
     top: 0;
     z-index: 900;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05); /* Debajo del overlay (como pediste) */
@@ -66,7 +66,7 @@ header {
     align-items: center;
     border: 1px solid #ccc;
     border-radius: 20px; /* Bordes redondeados */
-    padding: 5px 20px;
+    padding: 12px 20px;
     background-color: #f4f4f4;
 }
 .search-input {
@@ -177,6 +177,47 @@ header {
     color: white;
     
 }
+.hero2 {
+    height: 90vh;
+    background-image: url('https://xdblvjdkfnlrcmymujfz.supabase.co/storage/v1/object/public/product-src/nosotras.PNG');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: end;
+    align-items:center;
+    text-align: start;
+    color: white;
+    
+}
+.about-content-box {
+    /* Fondo blanco semi-transparente */
+    background-color: rgba(255, 255, 255, 0.95); 
+    padding: 2.5rem;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    margin-right: 5rem;
+    /* Tamaño y Posición */
+    max-width: 600px; /* Limita el ancho para que sea legible */
+    color: var(--text-color); /* Asegura texto oscuro */
+}
+
+.about-content-box h2 {
+    font-family: 'Noto Serif Display', serif; /* Usa tu fuente de títulos */
+    font-size: 2.5em;
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.about-content-box p {
+    font-size: 1rem;
+    line-height: 1.7; /* Texto más espaciado y legible */
+    margin-bottom: 1.5rem;
+}
+.about-content-box .cta-button {
+    display: inline-block; 
+}
+
 
 .hero-content {
     padding: 4rem 5%;
@@ -341,7 +382,7 @@ footer {
     /* Define 2 columnas: 280px para el filtro, 1fr (resto) para productos */
     grid-template-columns: 280px 1fr;
     gap: 2rem;
-    padding: 2rem 5%;
+    padding: 2rem 0%;
     max-width: 1600px;
     margin: 0 auto;
 }
@@ -365,10 +406,32 @@ footer {
 }
 
 .filter-group h3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
     font-size: 1.1rem;
     font-weight: 600;
     color: var(--primary-color);
     margin-bottom: 1rem;
+}
+.filter-group h3::after {
+    content: '>'; /* Símbolo de "mayor que" */
+    display: inline-block;
+    font-weight: bold;
+    font-size: 0.9em;
+    transform: rotate(90deg); /* Apunta hacia abajo por defecto */
+    transition: transform 0.3s ease;
+}
+.filter-group .filter-list {
+    display: none;
+    padding-left: 0.5rem; /* Opcional: indenta los filtros */
+}
+.filter-group.active .filter-list {
+    display: block;
+}
+.filter-group.active h3::after {
+    transform: rotate(-90deg); /* Apunta hacia arriba */
 }
 
 .search-bar {
@@ -429,6 +492,24 @@ footer {
 
 /* Adaptación para pantallas más pequeñas (móviles) */
 @media (max-width: 768px) {
+    .hero-2 {
+        /* En móvil, alinea el bloque al centro */
+        justify-content: center;
+        padding: 0 2rem; /* Menos padding lateral */
+        height: auto; /* Altura automática */
+        min-height: 80vh; /* Que al menos ocupe pantalla */
+    }
+
+    .about-content-box {
+        padding: 2rem;
+        max-width: 100%; /* Ocupa todo el ancho */
+        margin: 3rem 0;
+        opacity: 75%; /* Espacio vertical en móvil */
+    }
+
+    .about-content-box h2 {
+        font-size: 2em;
+    }
     header {
         display: block;
         padding: 0;
@@ -618,6 +699,9 @@ footer {
         /* Asegura que tenga scroll interno y padding */
         overflow-y: auto;
         padding: 1.5rem;
+    }
+    .filter-sidebar.active {
+        transform: translateX(0); /* <-- Esto hace que se deslice a la vista */
     }
     .filter-actions {
         position: sticky;

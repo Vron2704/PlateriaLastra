@@ -155,6 +155,27 @@ document.addEventListener('DOMContentLoaded', () => {
         if (filterSidebar) filterSidebar.classList.remove('active');
         if (overlay) overlay.classList.remove('active');
     }
+    // --- 1. SELECCIÓN DE ELEMENTOS ---
+    // --- 2. FUNCIONES DE ABRIR / CERRAR ---
+    // ... (tus funciones: openNavMenu, closeNavMenu, etc.)
+
+    // === 3. NUEVA LÓGICA PARA EL ACORDEÓN DE FILTROS ===
+    if (filterSidebar) {
+        filterSidebar.addEventListener('click', (event) => {
+            
+            // Revisa si el usuario hizo clic en un H3
+            const header = event.target.closest('.filter-group h3');
+
+            if (header) {
+                // Si hizo clic en un H3, busca su "grupo" padre
+                const group = header.closest('.filter-group');
+                if (group) {
+                    // Y simplemente añade o quita la clase '.active'
+                    group.classList.toggle('active');
+                }
+            }
+        });
+    }
 
     // --- 3. ESCUCHADORES DE EVENTOS (LISTENERS) ---
 

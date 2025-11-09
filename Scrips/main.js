@@ -18,6 +18,23 @@ document.addEventListener('DOMContentLoaded', () => {
         if (navMenu) navMenu.classList.remove('active');
         if (overlay) overlay.classList.remove('active');
     }
+    const heroSection = document.querySelector('.hero, .hero-2');
+    
+    // 2. Si existe una sección 'hero' (y solo si existe)...
+    if (heroSection) {
+        const header = document.querySelector('header');
+        
+        if (header) {
+            // 3. Obtenemos la altura exacta del header
+            const headerHeight = header.offsetHeight;
+            
+            // 4. Le decimos a la ventana que se scrollee a esa altura
+            window.scrollTo({
+                top: headerHeight,
+                behavior: 'smooth' 
+            });
+        }
+    }
 
     // Escuchadores de eventos
     if (menuBtn) {
@@ -31,5 +48,5 @@ document.addEventListener('DOMContentLoaded', () => {
     if (overlay) {
         overlay.addEventListener('click', closeMenu); // El overlay CIERRA
     }
-
+    
 });
