@@ -36,7 +36,7 @@ async function cargarProductos() {
             <div class="product-card" type="${producto.type}">
                 <img src="${producto.img_url}" alt="Imagen de ${producto.nombre}">
                 <h3>${producto.nombre}</h3>
-                <p>${producto.descripcion || 'Sin descripción.'}</p>
+                <p>${producto.descripción || 'Sin descripción.'}</p>
                 <button class="cta-button">Más información</button>
                 </div>
         `;

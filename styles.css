@@ -1,4 +1,7 @@
 /* ======== ESTILOS GLOBALES ======== */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
 :root {
     --primary-color: #1a325a; /* Un color verde azulado oscuro, profesional */
     --secondary-color: #f4f4f4;
@@ -21,6 +24,18 @@ body {
 header {
     width: 100%;
 }
+.intro {
+    padding: 4rem 5%;
+    text-align: center;
+    max-width: 800px; /* Limita el ancho para que sea más legible */
+    margin: 0 auto;   /* Centra el contenedor */
+}
+
+.intro h2 {
+    font-size: 2.2rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
 
 /* ======== BARRA DE NAVEGACIÓN ======== */
 .navbar {
@@ -41,9 +56,6 @@ header {
     gap: 10px;
     flex-direction: row;
     align-items: center;
-}
-.nav-container img {
-    display: block;
 }
 
 .logo {
@@ -97,6 +109,24 @@ header {
 }
 .nav-logo {
     height: 60px;
+}
+.menu-toggle {
+    display: none; /* Oculto en escritorio por defecto */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1001; /* Asegura que esté sobre otros elementos */
+}
+
+/* Estilos para las 3 barritas del icono */
+.menu-toggle .bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: var(--primary-color);
+    margin: 5px 0;
+    transition: 0.3s;
 }
 
 /* ======== SECCIÓN HÉROE ======== */
@@ -339,9 +369,93 @@ footer {
 }
 
 /* Adaptación para pantallas más pequeñas (móviles) */
+
 @media (max-width: 768px) {
+    
+    /* ======== BARRA DE NAVEGACIÓN ======== */
+    .logo {
+        display: none;
+    }
+    .navbar {
+        /* Mantiene el logo y el botón en la misma fila */
+        flex-direction: row;
+        justify-content: space-between; /* Los separa */
+        align-items: center;
+        padding: 0;
+    }
+    .menu-toggle {
+        display: block;
+        padding: 0.5rem 2rem;
+        z-index: 1001; /* Muestra el botón en móvil */
+    }
+    .nav-links {
+        display: none; /* OCULTO POR DEFECTO EN MÓVIL */
+        
+        /* Estilos del contenedor desplegable */
+        position: absolute;
+        top: 66px; /* Ajusta esto a la altura de tu navbar */
+        left: 0;
+        width: 100%;
+        background-color: var(--bg-color);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        
+        /* Apila los enlaces verticalmente */
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem 0;
+        margin: 0;
+    }
+
+    .nav-links li {
+        margin: 0.75rem 0;
+    }
+
+    .nav-links.active {
+        display: flex; /* Se muestra cuando JS añade esta clase */
+    }
+
+    .nav-container .nav-logo{
+        height: 50px;
+    }
+
+    /* ======== SECCIÓN HÉROE ======== */
+    .hero {
+        height: 80vh; /* Reduce un poco la altura en móvil */
+        justify-content:left; /* Centra el contenido */
+        text-align: left; /* Centra el texto */
+    }
+
+    .hero-content {
+        padding: 2rem 5%; /* Menos padding lateral */
+    }
+
+    .hero p {
+        /* Reduce drásticamente el tamaño del texto para que quepa */
+        font-size: 2.8em; 
+    }
+
+    /* ======== SECCIÓN INTRO ======== */
+    .intro {
+        padding: 2rem 5%; /* Menos padding */
+    }
+
+    .intro h2 {
+        font-size: 1.8rem; /* Título más pequeño */
+    }
+
+    /* ======== PIE DE PÁGINA ======== */
+    .footer-content {
+        /* Apila las secciones del footer verticalmente */
+        flex-direction: column;
+        align-items: center; /* Centra las secciones */
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    /* ======== PÁGINA CATÁLOGO (Tus reglas) ======== */
     .catalog-page-layout {
-        /* Apila la barra de filtros y los productos en lugar de 2 columnas */
+        /* Asegúrate de que este también tenga padding */
+        padding: 2rem 5%;
         grid-template-columns: 1fr;
     }
     
