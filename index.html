@@ -15,23 +15,30 @@
     <header>
         <nav class="navbar">
             <a href="/index.html" class ="nav-container">
-                <img src="https://xdblvjdkfnlrcmymujfz.supabase.co/storage/v1/object/public/product-src/platerialastralogoimg.png" alt="Logo de Plateria Lastra" class="nav-logo">
-                <img class="logo" src="https://xdblvjdkfnlrcmymujfz.supabase.co/storage/v1/object/public/product-src/logotipo.png" alt="Logo de Plateria Lastra">
+            <img src="https://xdblvjdkfnlrcmymujfz.supabase.co/storage/v1/object/public/product-src/platerialastralogoimg.png" alt="Logo de Plateria Lastra" class="nav-logo">
+            <img class="logo" src="https://xdblvjdkfnlrcmymujfz.supabase.co/storage/v1/object/public/product-src/logotipo.png" alt="Logo de Plateria Lastra">
             </a>
             <button class="menu-toggle" id="menu-toggle-btn" aria-label="Abrir menú">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
             </button>
-            <ul class="nav-links" id="nav-links-menu">
-                <li><a href="/index.html" class="active">Inicio</a></li> 
-                <li><a href="/catalogo.html">Catálogo</a></li>
-                <li><a href="/nosotros.html">Nosotros</a></li>
-            </ul>
         </nav>
+        <ul class="nav-links" id="nav-links-menu">
+                <li class="nav-menu-header">
+                    <span class="menu-title">Menú</span>
+                    <button class="close-menu-btn" id="close-menu-btn" aria-label="Cerrar menú">
+                        &times; </button>
+                </li>
+                <li><a href="/index.html" class="active" class="ref">Inicio</a></li> 
+                <li><a href="/catalogo.html" class="ref">Catálogo</a></li>
+                <li><a href="/nosotros.html" class="ref">Nosotros</a></li>
+        </ul>
+            <div class="overlay" id="overlay"></div>
     </header>
 
     <main>
+        
         <section class="hero">
             <div class="hero-content">
                 <p class="texto-casting">Amplia<br>variedad de<br>ceras para<br>casting</p>

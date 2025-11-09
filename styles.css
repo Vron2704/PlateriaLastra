@@ -23,6 +23,18 @@ body {
 }
 header {
     width: 100%;
+    
+    /* Propiedades movidas desde .navbar */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0rem 5%;
+    background-color: var(--bg-color);
+    position: sticky;
+    top: 0;
+    
+    /* El z-index para que se oculte detrás del overlay */
+    z-index: 900; 
 }
 .intro {
     padding: 4rem 5%;
@@ -38,17 +50,6 @@ header {
 }
 
 /* ======== BARRA DE NAVEGACIÓN ======== */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0rem 5%;
-    background-color: var(--bg-color);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    text-align: center;
-}
 .nav-container {
     position: relative;
     display: flex;
@@ -57,7 +58,9 @@ header {
     flex-direction: row;
     align-items: center;
 }
-
+.nav-menu-header{
+    display: none;
+}
 .logo {
     height: 20px;
 }
@@ -96,7 +99,7 @@ header {
     width: 100%; /* La línea ocupará el 100% del ancho del enlace */
     height: 2px; /* El grosor de la línea */
     background-color: #0d5a5f; /* Color verde/teal (aprox. de tu imagen) */
-    left: 0;
+    right: 0;
     bottom: 0; /* Lo pega a la parte de abajo del <a> (con el padding) */
   /* --- 5. La animación (oculto por defecto) --- */
     transform: scaleX(0); /* Lo "encoge" a 0% de ancho por defecto */
@@ -116,7 +119,7 @@ header {
     border: none;
     cursor: pointer;
     padding: 10px;
-    z-index: 1001; /* Asegura que esté sobre otros elementos */
+    z-index: 1; /* Asegura que esté sobre otros elementos */
 }
 
 /* Estilos para las 3 barritas del icono */
@@ -367,42 +370,81 @@ footer {
     /* El .product-grid y .product-card ya tienen estilos del CSS anterior */
     min-width: 0; /* Arreglo para grids */
 }
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Negro semi-transparente */
+    z-index: 1000; /* Debajo del menú, encima del contenido */
+    
+    /* Oculto por defecto */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
 
 /* Adaptación para pantallas más pequeñas (móviles) */
-
 @media (max-width: 768px) {
+    header {
+        /* En móvil, 'header' no debe alinear nada */
+        display: block;
+        padding: 0;
+        position: static; /* No es sticky en móvil (la navbar sí) */
+        background-color: transparent;
+    }
     
     /* ======== BARRA DE NAVEGACIÓN ======== */
     .logo {
         display: none;
     }
     .navbar {
-        /* Mantiene el logo y el botón en la misma fila */
-        flex-direction: row;
-        justify-content: space-between; /* Los separa */
+        /* En móvil, .navbar SÍ es la barra sticky */
+        display: flex;
+        justify-content: space-between;
         align-items: center;
-        padding: 0;
+        background-color: var(--bg-color);
+        position: sticky;
+        top: 0;
+        z-index: 900;
     }
     .menu-toggle {
         display: block;
-        padding: 0.5rem 2rem;
-        z-index: 1001; /* Muestra el botón en móvil */
+        padding: 1.5rem 2rem;
+        z-index: 1; /* Muestra el botón en móvil */
     }
-    .nav-links {
-        display: none; /* OCULTO POR DEFECTO EN MÓVIL */
+    .nav-links{
+        /* Posición y tamaño */
+        position: fixed; /* Fijo en la pantalla */
+        top: 0;
+        right: 0;
+        height: 100vh; /* 100% de la altura de la pantalla */
+        width: 80%;    /* 80% del ancho (como en la imagen) */
+        max-width: 320px; /* Un ancho máximo */
         
-        /* Estilos del contenedor desplegable */
-        position: absolute;
-        top: 66px; /* Ajusta esto a la altura de tu navbar */
-        left: 0;
-        width: 100%;
+        /* Oculto por defecto (fuera de la pantalla a la izquierda) */
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out; /* Animación de slide */
+        
+        /* Estilos del panel */
         background-color: var(--bg-color);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        
-        /* Apila los enlaces verticalmente */
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+        z-index: 2000;/* Encima del overlay */
+        /* Layout interno */
+        display: flex;
         flex-direction: column;
-        text-align: center;
-        padding: 1rem 0;
+        padding: 1.5rem;
+        margin: 0;
+        text-align: left; /* Alinea texto a la izquierda */
+        list-style: none; /* Quita los puntos de la lista */
+    }
+    .nav-menu-header{
         margin: 0;
     }
 
@@ -412,6 +454,7 @@ footer {
 
     .nav-links.active {
         display: flex; /* Se muestra cuando JS añade esta clase */
+        transform: translateX(0); /* Lo desliza a la vista */
     }
 
     .nav-container .nav-logo{
@@ -462,5 +505,30 @@ footer {
     .filter-sidebar {
         position: static; /* Quita la posición fija en móviles */
         top: auto;
+    }
+    .nav-links .nav-menu-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #000000;
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+        margin: 0;
+    }
+    .menu-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+
+    .close-menu-btn {
+        background: none;
+        border: none;
+        font-size: 2.5rem;
+        font-weight: 300;
+        color: #000000;
+        cursor: pointer;
+        padding: 0;
+        line-height: 1;
     }
 }
