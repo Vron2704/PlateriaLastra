@@ -24,14 +24,18 @@ body {
 header {
     width: 100%;
     display: flex;
-    justify-content: space-between; /* <-- ESTA ES LA MAGIA */
+    justify-content: space-between; 
     align-items: center;
     padding: 0rem 5%;
     background-color: var(--bg-color);
-
     top: 0;
-    z-index: 900;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05); /* Debajo del overlay (como pediste) */
+    z-index: 900; 
+    /* La sombra y el sticky se mueven a la clase .sticky-nav */
+}
+header.sticky-nav {
+    position: sticky;
+    top: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 .intro {
     padding: 4rem 5%;
@@ -82,8 +86,8 @@ header {
     cursor: pointer;
     padding: 0;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: end;
+    justify-content: end;
     color: var(--text-color);
 }
 .search-button svg {
@@ -253,6 +257,11 @@ header {
 }
 
 /* ======== CATÁLOGO DE PRODUCTOS ======== */
+.product-card-link {
+    display: block; /* Hace que el <a> ocupe su espacio en el grid */
+    text-decoration: none; /* Quita el subrayado azul */
+    color: inherit; /* Mantiene el color de texto normal */
+}
 .mobile-filter-bar {
     display: none;
 }
@@ -312,6 +321,40 @@ header {
     text-align: left;
 }
 
+/* 1. Resuelve "sin tanta envergadura" y "centrada" */
+#catalog-search {
+    position: relative; /* Clave para posicionar el icono */
+    max-width: 700px; /* Ancho máximo (como antes) */
+    margin: 2rem auto; /* Centrado (como antes) */
+}
+#catalog-search .search-button {
+    position: absolute; /* Se superpone al input */
+    left: 15px; /* Distancia desde la izquierda */
+    top: 50%;
+    transform: translateY(-50%); /* Centrado vertical perfecto */
+    
+    /* Quitamos estilos de botón para que sea solo un icono */
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: #888; /* Un color gris para el icono */
+    cursor: default; /* No parece un botón clickeable */
+}
+
+#catalog-search .search-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+#catalog-search .search-input {
+    width: 100%; /* ¡Ocupa todo el ancho! */
+    
+    /* Padding: (Arriba/Abajo) (Derecha) (Izquierda) */
+    /* Dejamos 45px a la izquierda para que el texto no se escriba
+       encima del icono de la lupa */
+    padding: 10px 20px 10px 25px; 
+}
 
 
 /* ======== PIE DE PÁGINA ======== */
@@ -510,6 +553,14 @@ footer {
     .about-content-box h2 {
         font-size: 2em;
     }
+    #catalog-search {
+        /* Usa un ancho del 90% para que no toque los bordes.
+        'max-width' es anulado por 'width'.
+        */
+        width: 90%;
+        max-width: 90%; /* Asegura que la regla se aplique */
+        margin: 2rem auto; /* Mantiene el centrado y el espacio vertical */
+    }
     header {
         display: block;
         padding: 0;
@@ -528,10 +579,9 @@ footer {
         position: sticky;
         top: 0;
         z-index: 900; /* Mantenemos el z-index bajo */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     }
-    .search-form {
-        display: none;
-    }
+    
     .nav-right {
         display: contents; /* El wrapper no afecta el layout */
     }
@@ -620,13 +670,13 @@ footer {
     /* ======== PÁGINA CATÁLOGO (Tus reglas) ======== */
     .catalog-page-layout {
         /* Asegúrate de que este también tenga padding */
-        padding: 1rem 2%;
+        padding: 1rem 3%;
         grid-template-columns: 2fr;
     }
     .product-grid {
         /* Forzamos 2 columnas de igual tamaño */
         grid-template-columns: repeat(2, 1fr);
-        gap: 1rem; /* Reduce el espacio entre tarjetas */
+        gap: 1.5rem; /* Reduce el espacio entre tarjetas */
     }
     
     .filter-sidebar {
@@ -761,4 +811,241 @@ footer {
     background-color: var(--primary-color);
     border: 1px solid var(--primary-color);
     color: white;
+}
+/* ================================== */
+/* === ESTILOS PÁGINA DETALLE DE PRODUCTO === */
+/* ================================== */
+
+/* Contenedor principal del layout */
+.product-detail-page-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+    gap: 40px; /* Espacio entre columnas */
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* --- Columna de Galería de Imágenes --- */
+.product-image-gallery {
+    display: flex; /* Para poner las miniaturas al lado de la imagen principal */
+    gap: 15px;
+}
+
+.thumbnail-container {
+    display: flex;
+    flex-direction: column; /* Miniaturas una debajo de la otra */
+    gap: 10px;
+    width: 80px; /* Ancho fijo para las miniaturas */
+}
+
+.thumbnail-image {
+    width: 100%;
+    height: 80px;
+    object-fit: cover;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all 0.2s ease-in-out;
+}
+
+.thumbnail-image:hover,
+.thumbnail-image.active {
+    border-color: var(--primary-color);
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.main-image-container {
+    flex-grow: 1; /* La imagen principal ocupa el resto del espacio */
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden; /* Asegura que la imagen no se salga */
+}
+
+#main-product-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain; /* Para que la imagen se vea completa */
+}
+
+/* --- Columna de Información del Producto --- */
+.product-info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.product-title {
+    font-family: 'Noto Serif Display', serif;
+    font-size: 2.8em;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    line-height: 1.1;
+}
+
+.product-price {
+    font-size: 2.2em;
+    font-weight: bold;
+    color: var(--primary-color); /* Color principal de tu marca */
+    margin-bottom: 1rem;
+}
+
+.product-description {
+    font-size: 1.05em;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+.product-details-group {
+    display: flex;
+    flex-wrap: wrap; /* Para que los detalles se envuelvan en pantallas pequeñas */
+    gap: 15px 30px;
+    margin-bottom: 1.5rem;
+    padding: 10px 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+.product-details-group span {
+    font-size: 0.95em;
+    color: #444;
+}
+
+.product-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 1.5rem;
+}
+
+.quantity-selector {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.quantity-btn {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: background-color 0.2s;
+}
+
+.quantity-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.quantity-input {
+    width: 50px;
+    border: none;
+    text-align: center;
+    -moz-appearance: textfield; /* Oculta flechas en Firefox */
+    font-size: 1em;
+    padding: 8px 0;
+}
+
+/* Oculta flechas en Chrome/Safari */
+.quantity-input::-webkit-outer-spin-button,
+.quantity-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.add-to-cart-btn {
+    /* Si tu cta-button ya tiene estilos, esto los complementa */
+    padding: 12px 25px;
+    font-size: 1.1em;
+    flex-grow: 1; /* Ocupa el espacio disponible */
+}
+
+.wishlist-btn {
+    background: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    color: #888;
+    transition: all 0.2s;
+}
+.wishlist-btn:hover {
+    background-color: #f0f0f0;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.wishlist-btn svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+}
+
+.stock-info {
+    font-size: 0.95em;
+    color: #e00; /* Rojo para poco stock */
+    font-weight: bold;
+    margin-top: 10px;
+}
+.stock-info span {
+    color: var(--primary-color); /* O el color que quieras para el número */
+}
+
+
+/* --- Responsive para Móviles y Tablets --- */
+@media (max-width: 992px) {
+    .product-detail-page-container {
+        grid-template-columns: 1fr; /* Una sola columna en móvil */
+        gap: 30px;
+        margin: 20px auto;
+        padding: 0 15px;
+    }
+
+    .product-image-gallery {
+        flex-direction: column-reverse; /* Imagen grande arriba, miniaturas abajo */
+        gap: 10px;
+    }
+
+    .thumbnail-container {
+        flex-direction: row; /* Miniaturas en fila en móvil */
+        width: 100%; /* Ocupa todo el ancho */
+        justify-content: center;
+        flex-wrap: wrap; /* Si hay muchas miniaturas */
+    }
+
+    .thumbnail-image {
+        width: 60px;
+        height: 60px;
+    }
+
+    .product-title {
+        font-size: 2em;
+    }
+
+    .product-price {
+        font-size: 1.8em;
+    }
+
+    .product-actions {
+        flex-direction: column; /* Botones apilados en móvil */
+        gap: 10px;
+        align-items: stretch; /* Se extienden al ancho completo */
+    }
+
+    .quantity-selector {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .add-to-cart-btn {
+        width: 100%;
+    }
+
+    .wishlist-btn {
+        width: 100%;
+    }
 }

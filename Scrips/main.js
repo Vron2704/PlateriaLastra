@@ -1,52 +1,102 @@
+// main.js
+
+// --- 1. IMPORTA las funciones de client.js ---
+import { 
+    cargarProductos, 
+    aplicarFiltros, 
+    cargarFiltrosCategoria 
+} from '/Scrips/client.js'; // Asegúrate que esta RUTA sea correcta
+
 // Espera a que todo el HTML esté cargado
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Selecciona todos los elementos necesarios
+    // --- 2. SELECCIÓN DE ELEMENTOS (Todos) ---
     const menuBtn = document.getElementById('menu-toggle-btn');
     const navMenu = document.getElementById('nav-links-menu');
+    const closeMenuBtn = document.getElementById('close-menu-btn');
+    const openFilterBtn = document.getElementById('open-filter-btn');
+    const filterSidebar = document.getElementById('filter-sidebar');
+    const applyFilterBtn = document.getElementById('filter-btn-apply');
+    const clearFilterBtn = document.getElementById('filter-btn-clear');
+    const searchForm = document.getElementById('search-form');
+    const searchInput = document.querySelector('.search-input');
     const overlay = document.getElementById('overlay');
-    const closeBtn = document.getElementById('close-menu-btn');
+    const header = document.querySelector('header');
 
-    // Función para ABRIR el menú
-    function openMenu() {
+    // --- 3. FUNCIONES INNATAS (Abrir/Cerrar Paneles) ---
+    function openNavMenu() {
         if (navMenu) navMenu.classList.add('active');
         if (overlay) overlay.classList.add('active');
     }
-
-    // Función para CERRAR el menú
-    function closeMenu() {
+    function closeNavMenu() {
         if (navMenu) navMenu.classList.remove('active');
         if (overlay) overlay.classList.remove('active');
     }
-    const heroSection = document.querySelector('.hero, .hero-2');
-    
-    // 2. Si existe una sección 'hero' (y solo si existe)...
-    if (heroSection) {
-        const header = document.querySelector('header');
-        
-        if (header) {
-            // 3. Obtenemos la altura exacta del header
-            const headerHeight = header.offsetHeight;
-            
-            // 4. Le decimos a la ventana que se scrollee a esa altura
-            window.scrollTo({
-                top: headerHeight,
-                behavior: 'smooth' 
-            });
-        }
+    function openFilterMenu() {
+        if (filterSidebar) filterSidebar.classList.add('active');
+        if (overlay) overlay.classList.add('active');
+    }
+    function closeFilterMenu() {
+        if (filterSidebar) filterSidebar.classList.remove('active');
+        if (overlay) overlay.classList.remove('active');
     }
 
-    // Escuchadores de eventos
-    if (menuBtn) {
-        menuBtn.addEventListener('click', openMenu); // El botón hamburguesa ABRE
+    // --- 4. LÓGICA DE HEADER STICKY ---
+    if (header) {
+        header.classList.add('sticky-nav');
+    }
+
+    // --- 5. CARGAS INICIALES (SOLO EN PÁGINA CATÁLOGO) ---
+    if (document.getElementById('catalogo-container')) {
+        cargarProductos();
+        cargarFiltrosCategoria();
     }
     
-    if (closeBtn) {
-        closeBtn.addEventListener('click', closeMenu); // El botón 'X' CIERRA
-    }
+    // --- 6. ESCUCHADORES DE EVENTOS (LISTENERS) ---
+    if (menuBtn) menuBtn.addEventListener('click', openNavMenu);
+    if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeNavMenu);
+    if (openFilterBtn) openFilterBtn.addEventListener('click', openFilterMenu);
     
+    if (applyFilterBtn) {
+        applyFilterBtn.addEventListener('click', () => {
+            aplicarFiltros(); 
+            closeFilterMenu();
+        });
+    }
+
+    if (clearFilterBtn) {
+        clearFilterBtn.addEventListener('click', () => {
+            if (filterSidebar) {
+                const checkboxes = filterSidebar.querySelectorAll('.filter-checkbox');
+                checkboxes.forEach(cb => cb.checked = false);
+            }
+            aplicarFiltros();
+            closeFilterMenu();
+        });
+    }
+
+    if (searchForm) {
+        searchForm.addEventListener('submit', (e) => e.preventDefault());
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener('input', aplicarFiltros);
+    }
+
     if (overlay) {
-        overlay.addEventListener('click', closeMenu); // El overlay CIERRA
+        overlay.addEventListener('click', () => {
+            closeNavMenu();
+            closeFilterMenu();
+        });
     }
     
+    if (filterSidebar) {
+        filterSidebar.addEventListener('click', (event) => {
+            const header = event.target.closest('.filter-group h3');
+            if (header) {
+                const group = header.closest('.filter-group');
+                if (group) group.classList.toggle('active');
+            }
+        });
+    }
 });
