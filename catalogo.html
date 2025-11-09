@@ -62,64 +62,51 @@
                 </button>
             </div>
 
-            <aside class ="filter-sidebar" id="filter-sidebar">
+            <aside class="filter-sidebar" id="filter-sidebar">
 
-                <div class="filter-group">
-                    <h3>Tipo de Producto</h3>
-                    <ul class="filter-list">
-                        <li>
-                            <input data-group ="tipo_producto" type="checkbox" id="filter-tipo-anillo" value="anillo" class="filter-checkbox">
-                            <label for="filter-anillo">Anillos</label>
-                        </li>
-                        <li>
-                            <input data-group ="tipo_producto" type="checkbox" id="filter-tipo-dije" value="dije" class="filter-checkbox">
-                            <label for="filter-dije">Dijes</label>
-                        </li>
-                    </ul>
-                </div>
-                <div class="filter-group">
-                    <h3>Engaste</h3>
-                    <ul class="filter-list">
-                        <li>
-                            <input data-group ="engaste" type="checkbox" id="filter-engaste-con" value="con_piedra" class="filter-checkbox">
-                            <label for="filter-conpiedra">Con piedra</label>
-                        </li>
-                        <li>
-                            <input data-group ="engaste" type="checkbox" id="filter-engaste-sin" value="sin_piedra" class="filter-checkbox">
-                            <label for="filter-sinpiedra">Sin piedra</label>
-                        </li>                 
-                    </ul>
-                </div>
+    <div class="panel-container" id="panel-container">
 
-                <div class="filter-group">
-                    <h3>Género</h3>
-                    <ul class="filter-list">
-                        <li>
-                            <input data-group ="genero" type="checkbox" id="filter-masc" value="masculino" class="filter-checkbox">
-                            <label for="filter-masc">Masculino</label>
-                        </li>
-                        <li>
-                            <input data-group ="genero" type="checkbox" id="filter-fem" value="femenino" class="filter-checkbox">
-                            <label for="filter-fem">Femenino</label>
-                        </li>
-                        <li>
-                            <input data-group ="genero" type="checkbox" id="filter-uni" value="unisex" class="filter-checkbox">
-                            <label for="filter-unis">Unisex</label>
-                        </li>                      
-                    </ul>
-                </div>
-                <div class="filter-group">
-                    <h3>Categoria</h3>
-                    <ul class="filter-list" id="lista-categorias-filtro">
-                        <!-- Las categorías se cargarán dinámicamente aquí -->
-                    </ul>
-                </div>
+        <div class="filter-panel active" id="panel-tipo_producto">
+            <div class="panel-header">
+                <h3>Filtrar por</h3>
+            </div>
+            <ul class="filter-list" id="lista-type">
+                <li>Cargando...</li>
+            </ul>
+        </div>
 
+        <div class="filter-panel" id="panel-genero">
+            <div class="panel-header">
+                <button class="panel-back-btn" data-target="panel-type">&lt; Volver</button> 
+                <h3 id="panel-genero-title">Género</h3>
+            </div>
+            <ul class="filter-list" id="lista-genero"> ... </ul>
+        </div>
+        
+        <div class="filter-panel" id="panel-engaste">
+            <div class="panel-header">
+                <button class="panel-back-btn" data-target="panel-genero">&lt; Volver</button>
+                <h3 id="panel-engaste-title">Engaste</h3>
+            </div>
+            <ul class="filter-list" id="lista-engaste">
+                </ul>
+        </div>
+
+        <div class="filter-panel" id="panel-categoria">
+            <div class="panel-header">
+                <button class="panel-back-btn" data-target="panel-engaste">&lt; Volver</button>
+                <h3 id="panel-categoria-title">Categoría</h3>
+            </div>
+            <ul class="filter-list" id="lista-categoria">
+                </ul>
+            
             <div class="filter-actions">
                 <button class="filter-btn-clear" id="filter-btn-clear">Limpiar</button>
                 <button class="filter-btn-apply" id="filter-btn-apply">Aplicar</button>
             </div>
-            </aside>
+        </div>
+        
+    </div> </aside>
             
 
             <div id="catalogo-container" class="product-grid">
