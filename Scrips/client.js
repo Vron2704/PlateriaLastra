@@ -6,22 +6,18 @@ const SUPABASE_URL = 'https://xdblvjdkfnlrcmymujfz.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkYmx2amRrZm5scmNteW11amZ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI0NjM5MDMsImV4cCI6MjA3ODAzOTkwM30.nWmdzB2Nm_fzhGDDeky5ho-EwbP-goxqMj-vuxLLvYg';
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// 1. DEFINE Y EXPORTA la variable de filtros global
 export let filtrosGlobales = {};
 
 /**
  * EXPORTA: Carga productos desde Supabase
  */
 export async function cargarProductos() {
-    console.log("Cargando productos con filtros:", filtrosGlobales);
     let query = supabase.from('productos').select('*');
 
-    // Filtros de Checkbox (solo 'categoria')
+    // ... (Tu lógica de filtros y búsqueda) ...
     if (filtrosGlobales.categoria && filtrosGlobales.categoria.length > 0) {
         query = query.in('categoria', filtrosGlobales.categoria);
     }
-    
-    // Filtros Jerárquicos
     if (filtrosGlobales.type) {
         query = query.eq('type', filtrosGlobales.type);
     }
@@ -31,8 +27,6 @@ export async function cargarProductos() {
     if (filtrosGlobales.engaste) {
         query = query.eq('engaste', filtrosGlobales.engaste);
     }
-
-    // Filtro de Búsqueda
     if (filtrosGlobales.search_term) {
         query = query.ilike('nombre', `%${filtrosGlobales.search_term}%`);
     }
@@ -43,7 +37,7 @@ export async function cargarProductos() {
         return;
     }
     
-    // Pinta los productos en el HTML
+    // ... (Pinta los productos en el HTML - sin cambios) ...
     const container = document.getElementById('catalogo-container');
     const noResultsMsg = document.getElementById('no-results-message');
     if (!container) return;
@@ -77,25 +71,18 @@ export async function cargarProductos() {
 export async function cargarOpcionesPanel(columna, panelId) {
     const listaContainer = document.getElementById(panelId);
     if (!listaContainer) {
-        console.error(`Error: No se encontró el contenedor de lista con ID: ${panelId}`);
+        // console.error(`Error: No se encontró el contenedor de lista con ID: ${panelId}`);
         return;
     }
     listaContainer.innerHTML = '<li>Cargando...</li>';
 
+    // Sintaxis CORRECTA para obtener valores únicos
     let query = supabase.from('productos').select(columna, { distinct: true });
 
-    // === LÓGICA DE FILTRO DEPENDIENTE CORREGIDA ===
-    // Encadenamos los filtros anteriores para reducir las opciones
-    if (filtrosGlobales.type) {
-        query = query.eq('type', filtrosGlobales.type);
-    }
-    if (filtrosGlobales.genero) {
-        query = query.eq('genero', filtrosGlobales.genero);
-    }
-    if (filtrosGlobales.engaste) {
-        query = query.eq('engaste', filtrosGlobales.engaste);
-    }
-    // =================================================
+    // Lógica de Filtro Dependiente (Mantenida)
+    if (filtrosGlobales.type) query = query.eq('type', filtrosGlobales.type);
+    if (filtrosGlobales.genero) query = query.eq('genero', filtrosGlobales.genero);
+    if (filtrosGlobales.engaste) query = query.eq('engaste', filtrosGlobales.engaste);
 
     const { data, error } = await query;
     if (error) {
@@ -107,12 +94,12 @@ export async function cargarOpcionesPanel(columna, panelId) {
     listaContainer.innerHTML = ''; 
     const valoresUnicos = data.map(item => item[columna]).filter(Boolean);
 
+    // Problema 3: Mismo formato y aplicación
     if (columna === 'categoria') {
-        // El último panel (Categoría) usa checkboxes
         valoresUnicos.forEach(valor => {
             const listItem = document.createElement('li');
-            listItem.className = 'checkbox-item';
-            // 🐛 Solución 3: El listener ahora se añade en main.js
+            // Usamos nav-link para el formato, y checkbox-container para el JS
+            listItem.className = 'nav-link checkbox-container'; 
             listItem.innerHTML = `
                 <input type="checkbox" id="filter-cat-${valor}" class="filter-checkbox" value="${valor}">
                 <label for="filter-cat-${valor}">${valor}</label>
@@ -136,19 +123,15 @@ export async function cargarOpcionesPanel(columna, panelId) {
  * EXPORTA: Recolecta filtros y llama a cargarProductos
  */
 export function aplicarFiltros() {
-    // 1. Recolectar búsqueda
+    // ... (Tu lógica de aplicación de filtros - sin cambios) ...
     const searchInput = document.querySelector('.search-input');
     if (searchInput && searchInput.value.trim() !== '') {
         filtrosGlobales.search_term = searchInput.value.trim();
     } else {
         delete filtrosGlobales.search_term;
     }
-
-    // 2. Recolectar checkboxes (solo del panel 'categoria')
     const checkboxesMarcados = document.querySelectorAll('#lista-categoria .filter-checkbox:checked');
     filtrosGlobales.categoria = Array.from(checkboxesMarcados).map(cb => cb.value);
-
-    // 3. Cargar productos
     cargarProductos();
 }
 

@@ -6,7 +6,7 @@ import {
     cargarOpcionesPanel,
     limpiarFiltros,
     filtrosGlobales 
-} from '/Scrips/client.js?v=4.1'; // Sube la versión a 4.1
+} from '/Scrips/client.js?v=5.0'; // Sube la versión a 5.0
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- 4. LÓGICA DE PÁGINA DE CATÁLOGO ---
+    // --- Lógica de PÁGINA DE CATÁLOGO ---
     if (document.getElementById('catalogo-container')) {
         cargarProductos(); 
         
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
             panelContainer.addEventListener('click', (e) => {
                 const link = e.target.closest('.nav-link');
                 const backBtn = e.target.closest('.panel-back-btn');
-                const checkbox = e.target.closest('#lista-categoria .filter-checkbox'); // Solo en categoría
+                const checkbox = e.target.closest('#lista-categoria .filter-checkbox'); 
                 
                 // 1. Navegación HACIA ADELANTE
                 if (link) {
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
                 
-                // 2. Navegación HACIA ATRÁS
+                // 2. Navegación HACIA ATRÁS (SOLUCIONADO EL ERROR DEL PANEL BLANCO)
                 if (backBtn) {
                     const targetPanelId = backBtn.dataset.target;
                     
@@ -103,9 +103,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (panelActual.id === 'panel-engaste') delete filtrosGlobales.genero;
                     if (panelActual.id === 'panel-categoria') delete filtrosGlobales.engaste;
                     
-                    // 🐛 Solución 2: Arreglo al regresar al primer filtro
-                    if (targetPanelId === 'panel-type') {
+                    // Recarga las opciones del panel destino para que no esté vacío
+                    let columnaDestino = targetPanelId.replace('panel-', '');
+                    let listaDestinoId = (columnaDestino === 'categoria') ? 'lista-categoria' : `lista-${columnaDestino}`;
+                    
+                    // Asegura que el panel principal recarga el 'type'
+                    if (columnaDestino === 'panel-type') {
                         cargarOpcionesPanel('type', 'lista-type');
+                    } else {
+                        cargarOpcionesPanel(columnaDestino, listaDestinoId);
                     }
                     
                     navegarA(targetPanelId);
@@ -138,6 +144,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Listeners Generales ---
+    const header = document.querySelector('header');
+    if (header) {
+        header.classList.add('sticky-nav');
+    }
     if (menuBtn) menuBtn.addEventListener('click', openNavMenu);
     if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeNavMenu);
     if (openFilterBtn) openFilterBtn.addEventListener('click', openFilterMenu);

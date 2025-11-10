@@ -30,7 +30,8 @@ header {
     background-color: var(--bg-color);
     top: 0;
     z-index: 900; 
-    /* La sombra y el sticky se mueven a la clase .sticky-nav */
+    /* Añade esta línea para recortar cualquier contenido que se salga */
+    overflow-x: hidden; 
 }
 header.sticky-nav {
     position: sticky;
@@ -280,8 +281,8 @@ header.sticky-nav {
 }
 
 .product-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(250px, 2fr));
+    /* SIMPLER AND CLEANER GRID: 4 columns, filling space */
+    grid-template-columns: repeat(4, 1fr); 
     gap: 2rem;
 }
 
@@ -422,24 +423,29 @@ footer {
 /* Diseño principal de la página de catálogo */
 .catalog-page-layout {
     display: grid;
-    /* Define 2 columnas: 280px para el filtro, 1fr (resto) para productos */
-    grid-template-columns: 280px 1fr;
+    /* FIX: More standard sidebar width, 300px + rest of space */
+    grid-template-columns: 300px 1fr;
     gap: 2rem;
-    padding: 2rem 0%;
-    max-width: 1600px;
-    margin: 0 auto;
+    /* FIX: More internal padding for better look */
+    padding: 2rem 5%; 
+    max-width: 1400px; /* Slightly wider overall container */
+    margin: 0 auto; /* Centering the main content block */
 }
 
 /* ======== BARRA DE FILTROS ======== */
 .filter-sidebar {
-    background-color: var(--bg-color);
-    border: 1px solid #eee;
+    background-color: var(--secondary-color); /* Light grey background */
+    border: none; /* Removing border to simplify */
     border-radius: 8px;
     padding: 1.5rem;
-    /* Fija la barra lateral si la página es larga */
     position: sticky;
-    top: 100px; /* Ajusta esto según la altura de tu navbar */
-    align-self: start; /* Impide que se estire */
+    top: 100px;
+    align-self: start; 
+    /* NEW: Add a subtle shadow for depth on desktop */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    /* For new layout: ensure the filter panel itself is visible */
+    display: block !important;
+    transform: none !important;
 }
 
 
@@ -678,11 +684,6 @@ footer {
         grid-template-columns: repeat(2, 1fr);
         gap: 1.5rem; /* Reduce el espacio entre tarjetas */
     }
-    
-    .filter-sidebar {
-        position: static; /* Quita la posición fija en móviles */
-        top: auto;
-    }
     .nav-links .nav-menu-header {
         display: flex;
         justify-content: space-between;
@@ -733,20 +734,19 @@ footer {
 
     /* === NUEVO SIDEBAR DE PANELES DESLIZANTES === */
     .filter-sidebar {
-        position: fixed; 
+        /* Deshabilita los estilos de escritorio */
+        position: fixed;
         top: 0;
         right: 0;
-        width: 80%;
-        max-width: 320px;
-        height: 100vh;
-        background-color: var(--bg-color);
         z-index: 2000;
-        transform: translateX(100%); /* Oculto por defecto */
-        transition: transform 0.3s ease-in-out;
         box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+        
+        /* Restaura la animación de móvil */
+        transform: translateX(100%); 
+        transition: transform 0.3s ease-in-out;
     }
     .filter-sidebar.active {
-        transform: translateX(0); /* Se muestra */
+        transform: translateX(0);
     }
 
     /* Contenedor de paneles (para la animación) */
@@ -861,6 +861,7 @@ footer {
         position: sticky;
         bottom: 0;
     }
+    
 
 .filter-btn-clear, 
 .filter-btn-apply {
@@ -1018,7 +1019,6 @@ footer {
     width: 50px;
     border: none;
     text-align: center;
-    -moz-appearance: textfield; /* Oculta flechas en Firefox */
     font-size: 1em;
     padding: 8px 0;
 }
