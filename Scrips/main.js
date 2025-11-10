@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const panelContainer = document.getElementById('panel-container');
     const applyFilterBtn = document.getElementById('filter-btn-apply');
     const clearFilterBtn = document.getElementById('filter-btn-clear');
-    const searchForm = document.getElementById('search-form');
-    const searchInput = document.querySelector('.search-input');
+    const searchForm = document.getElementById('catalog-search'); // Corregido: el ID en catalogo.html es 'catalog-search'
+    const searchInput = document.querySelector('#catalog-search .search-input'); // Aseguramos el selector
     const overlay = document.getElementById('overlay');
 
     // --- Funciones de Paneles (Mantenidas) ---
@@ -74,15 +74,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     let siguientePanelId, siguienteColumna, listaId;
                     
+                    // *** NUEVA JERARQUÍA: type > engaste > genero > categoria ***
                     if (columna === 'type') {
-                        siguientePanelId = 'panel-genero';
-                        siguienteColumna = 'genero';
-                        listaId = 'lista-genero';
-                    } else if (columna === 'genero') {
-                        siguientePanelId = 'panel-engaste';
-                        siguienteColumna = 'engaste';
+                        siguientePanelId = 'panel-engaste'; 
+                        siguienteColumna = 'engaste';      
                         listaId = 'lista-engaste';
-                    } else if (columna === 'engaste') {
+                    } else if (columna === 'engaste') { 
+                        siguientePanelId = 'panel-genero'; 
+                        siguienteColumna = 'genero';       
+                        listaId = 'lista-genero';
+                    } else if (columna === 'genero') { 
                         siguientePanelId = 'panel-categoria';
                         siguienteColumna = 'categoria';
                         listaId = 'lista-categoria';
@@ -94,30 +95,32 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
                 
-                // 2. Navegación HACIA ATRÁS (SOLUCIONADO EL ERROR DEL PANEL BLANCO)
+                // 2. Navegación HACIA ATRÁS (Corregido el bug del panel en blanco)
                 if (backBtn) {
                     const targetPanelId = backBtn.dataset.target;
                     
                     const panelActual = backBtn.closest('.filter-panel');
-                    if (panelActual.id === 'panel-genero') delete filtrosGlobales.type;
-                    if (panelActual.id === 'panel-engaste') delete filtrosGlobales.genero;
-                    if (panelActual.id === 'panel-categoria') delete filtrosGlobales.engaste;
-                    
-                    // Recarga las opciones del panel destino para que no esté vacío
-                    let columnaDestino = targetPanelId.replace('panel-', '');
-                    let listaDestinoId = (columnaDestino === 'categoria') ? 'lista-categoria' : `lista-${columnaDestino}`;
-                    
-                    // Asegura que el panel principal recarga el 'type'
-                    if (columnaDestino === 'panel-type') {
-                        cargarOpcionesPanel('type', 'lista-type');
-                    } else {
-                        cargarOpcionesPanel(columnaDestino, listaDestinoId);
+
+                    // Lógica de borrado de filtros con la nueva jerarquía
+                    if (panelActual.id === 'panel-engaste') delete filtrosGlobales.type;
+                    if (panelActual.id === 'panel-genero') delete filtrosGlobales.engaste;
+                    if (panelActual.id === 'panel-categoria') {
+                         delete filtrosGlobales.genero;
+                         delete filtrosGlobales.categoria; // Limpia los checkboxes
                     }
+
+                    
+                    // Recarga las opciones del panel destino para que no esté vacío (SOLUCIÓN)
+                    let columnaDestino = targetPanelId.replace('panel-', '');
+                    let listaDestinoId = `lista-${columnaDestino}`;
+                    
+                    // Se usa la columna directamente
+                    cargarOpcionesPanel(columnaDestino, listaDestinoId);
                     
                     navegarA(targetPanelId);
                 }
                 
-                // 3. Aplicar al instante en Categoría
+                // 3. Aplicar al instante en Categoría (Mantenida)
                 if (checkbox) {
                     aplicarFiltros();
                 }

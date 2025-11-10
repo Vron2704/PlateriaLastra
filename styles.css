@@ -1,3 +1,4 @@
+/* PlateriaLastra/styles.css */
 /* ======== ESTILOS GLOBALES ======== */
 *, *::before, *::after {
     box-sizing: border-box;
@@ -281,7 +282,7 @@ header.sticky-nav {
 }
 
 .product-grid {
-    /* SIMPLER AND CLEANER GRID: 4 columns, filling space */
+    /* FIX: Revierte a 4 columnas para escritorio como solicitado */
     grid-template-columns: repeat(4, 1fr); 
     gap: 2rem;
 }
@@ -423,8 +424,8 @@ footer {
 /* Diseño principal de la página de catálogo */
 .catalog-page-layout {
     display: grid;
-    /* FIX: More standard sidebar width, 300px + rest of space */
-    grid-template-columns: 300px 1fr;
+    /* FIX: Se elimina la columna del sidebar, el catálogo ocupa todo el ancho */
+    grid-template-columns: 1fr;
     gap: 2rem;
     /* FIX: More internal padding for better look */
     padding: 2rem 5%; 
@@ -443,8 +444,8 @@ footer {
     align-self: start; 
     /* NEW: Add a subtle shadow for depth on desktop */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    /* For new layout: ensure the filter panel itself is visible */
-    display: block !important;
+    /* FIX: Ocultar el sidebar en escritorio */
+    display: none; 
     transform: none !important;
 }
 
@@ -674,13 +675,14 @@ footer {
     }
 
     /* ======== PÁGINA CATÁLOGO (Tus reglas) ======== */
+    /* ======== PÁGINA CATÁLOGO (Tus reglas) ======== */
     .catalog-page-layout {
         /* Asegúrate de que este también tenga padding */
         padding: 1rem 3%;
-        grid-template-columns: 2fr;
+        grid-template-columns: 1fr;
     }
     .product-grid {
-        /* Forzamos 2 columnas de igual tamaño */
+        /* Se mantiene en 2 columnas para móvil */
         grid-template-columns: repeat(2, 1fr);
         gap: 1.5rem; /* Reduce el espacio entre tarjetas */
     }
@@ -744,6 +746,8 @@ footer {
         /* Restaura la animación de móvil */
         transform: translateX(100%); 
         transition: transform 0.3s ease-in-out;
+        /* FIX: Asegura que se muestre en móvil aunque el estilo de escritorio diga display: none */
+        display: block !important;
     }
     .filter-sidebar.active {
         transform: translateX(0);
@@ -1114,9 +1118,5 @@ footer {
     }
 
     .add-to-cart-btn {
-        width: 100%;
-    }
-
-    .wishlist-btn {
         width: 100%;
     }}}

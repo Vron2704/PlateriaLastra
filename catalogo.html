@@ -74,25 +74,25 @@
                 </ul>
             </div>
 
-            <div class="filter-panel" id="panel-genero">
-                <div class="panel-header">
-                    <button class="panel-back-btn" data-target="panel-type">&lt; Volver</button> 
-                    <h3 id="panel-genero-title">Género</h3>
-                </div>
-                <ul class="filter-list" id="lista-genero"> ... </ul>
-            </div>
-            
             <div class="filter-panel" id="panel-engaste">
                 <div class="panel-header">
-                    <button class="panel-back-btn" data-target="panel-genero">&lt; Volver</button>
+                    <button class="panel-back-btn" data-target="panel-type">&lt; Volver</button> 
                     <h3 id="panel-engaste-title">Engaste</h3>
                 </div>
                 <ul class="filter-list" id="lista-engaste"></ul>
             </div>
+            
+            <div class="filter-panel" id="panel-genero">
+                <div class="panel-header">
+                    <button class="panel-back-btn" data-target="panel-engaste">&lt; Volver</button>
+                    <h3 id="panel-genero-title">Género</h3>
+                </div>
+                <ul class="filter-list" id="lista-genero"> ... </ul>
+            </div>
 
             <div class="filter-panel" id="panel-categoria">
                 <div class="panel-header">
-                    <button class="panel-back-btn" data-target="panel-engaste">&lt; Volver</button>
+                    <button class="panel-back-btn" data-target="panel-genero">&lt; Volver</button>
                     <h3 id="panel-categoria-title">Categoría</h3>
                 </div>
                 <ul class="filter-list" id="lista-categoria"></ul>
@@ -103,15 +103,14 @@
                 </div>
             </div>
             
-        </div> </aside>
+        </div> 
+    </aside>
             
 
         <div id="catalogo-container" class="product-grid">
-            <div class="product-grid">
             <p id="no-results-message" style="display: none; text-align: center; font-size: 1.2rem; color: #777;">
                 No se encontraron productos que coincidan con su búsqueda.
             </p>
-            </div>
         </div>
     </div>
 

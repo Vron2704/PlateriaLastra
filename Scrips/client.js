@@ -14,7 +14,7 @@ export let filtrosGlobales = {};
 export async function cargarProductos() {
     let query = supabase.from('productos').select('*');
 
-    // ... (Tu lógica de filtros y búsqueda) ...
+    // La lógica de filtros es correcta y se respeta la composición de la jerarquía
     if (filtrosGlobales.categoria && filtrosGlobales.categoria.length > 0) {
         query = query.in('categoria', filtrosGlobales.categoria);
     }
@@ -37,7 +37,6 @@ export async function cargarProductos() {
         return;
     }
     
-    // ... (Pinta los productos en el HTML - sin cambios) ...
     const container = document.getElementById('catalogo-container');
     const noResultsMsg = document.getElementById('no-results-message');
     if (!container) return;
@@ -71,7 +70,6 @@ export async function cargarProductos() {
 export async function cargarOpcionesPanel(columna, panelId) {
     const listaContainer = document.getElementById(panelId);
     if (!listaContainer) {
-        // console.error(`Error: No se encontró el contenedor de lista con ID: ${panelId}`);
         return;
     }
     listaContainer.innerHTML = '<li>Cargando...</li>';
@@ -79,10 +77,17 @@ export async function cargarOpcionesPanel(columna, panelId) {
     // Sintaxis CORRECTA para obtener valores únicos
     let query = supabase.from('productos').select(columna, { distinct: true });
 
-    // Lógica de Filtro Dependiente (Mantenida)
-    if (filtrosGlobales.type) query = query.eq('type', filtrosGlobales.type);
-    if (filtrosGlobales.genero) query = query.eq('genero', filtrosGlobales.genero);
-    if (filtrosGlobales.engaste) query = query.eq('engaste', filtrosGlobales.engaste);
+    // Lógica de Filtro Dependiente (Solo se aplica lo que va antes en la jerarquía)
+    if (columna === 'engaste' || columna === 'genero' || columna === 'categoria') {
+        if (filtrosGlobales.type) query = query.eq('type', filtrosGlobales.type);
+    }
+    if (columna === 'genero' || columna === 'categoria') {
+        if (filtrosGlobales.engaste) query = query.eq('engaste', filtrosGlobales.engaste);
+    }
+    if (columna === 'categoria') {
+        if (filtrosGlobales.genero) query = query.eq('genero', filtrosGlobales.genero);
+    }
+
 
     const { data, error } = await query;
     if (error) {
@@ -92,25 +97,31 @@ export async function cargarOpcionesPanel(columna, panelId) {
     }
 
     listaContainer.innerHTML = ''; 
+    // Usamos filter(Boolean) para eliminar valores nulos/vacíos
     const valoresUnicos = data.map(item => item[columna]).filter(Boolean);
 
-    // Problema 3: Mismo formato y aplicación
     if (columna === 'categoria') {
         valoresUnicos.forEach(valor => {
             const listItem = document.createElement('li');
-            // Usamos nav-link para el formato, y checkbox-container para el JS
-            listItem.className = 'nav-link checkbox-container'; 
+            listItem.className = 'checkbox-item'; 
+            
+            // Aseguramos que los checkboxes que ya estaban marcados sigan marcados al recargar el panel
+            const isChecked = filtrosGlobales.categoria && filtrosGlobales.categoria.includes(valor) ? 'checked' : '';
+
             listItem.innerHTML = `
-                <input type="checkbox" id="filter-cat-${valor}" class="filter-checkbox" value="${valor}">
+                <input type="checkbox" id="filter-cat-${valor}" class="filter-checkbox" value="${valor}" ${isChecked}>
                 <label for="filter-cat-${valor}">${valor}</label>
             `;
             listaContainer.appendChild(listItem);
         });
     } else {
-        // Los otros paneles (Tipo, Género, Engaste) usan enlaces
+        // Los otros paneles (Tipo, Engaste, Género) usan enlaces
         valoresUnicos.forEach(valor => {
             const listItem = document.createElement('li');
-            listItem.className = 'nav-link';
+            
+            const isFiltered = filtrosGlobales[columna] === valor ? 'filtered' : '';
+
+            listItem.className = `nav-link ${isFiltered}`;
             listItem.dataset.valor = valor;
             listItem.dataset.columna = columna;
             listItem.textContent = valor;
@@ -123,7 +134,6 @@ export async function cargarOpcionesPanel(columna, panelId) {
  * EXPORTA: Recolecta filtros y llama a cargarProductos
  */
 export function aplicarFiltros() {
-    // ... (Tu lógica de aplicación de filtros - sin cambios) ...
     const searchInput = document.querySelector('.search-input');
     if (searchInput && searchInput.value.trim() !== '') {
         filtrosGlobales.search_term = searchInput.value.trim();
@@ -140,5 +150,9 @@ export function aplicarFiltros() {
  */
 export function limpiarFiltros() {
     filtrosGlobales = {}; // Resetea el objeto
+    // Limpia visualmente el input de búsqueda
+    const searchInput = document.querySelector('.search-input');
+    if (searchInput) searchInput.value = '';
+    
     aplicarFiltros(); // Recarga productos
 }
