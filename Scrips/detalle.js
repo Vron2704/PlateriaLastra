@@ -81,7 +81,7 @@ async function cargarDetalleProducto() {
             
             <div class="product-details-group">
                 <span><strong>Categoría:</strong> ${data.categoria}</span>
-                <span><strong>Tipo:</strong> ${data.tipo_producto || 'N/A'}</span>
+                <span><strong>Tipo:</strong> ${data.type || 'N/A'}</span>
                 <span><strong>Género:</strong> ${data.genero || 'N/A'}</span>
                 <span><strong>Engaste:</strong> ${data.engaste || 'N/A'}</span>
             </div>

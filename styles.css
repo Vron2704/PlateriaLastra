@@ -1,8 +1,4 @@
 /* PlateriaLastra/styles.css */
-/* ======== ESTILOS GLOBALES ======== */
-*, *::before, *::after {
-    box-sizing: border-box;
-}
 :root {
     --primary-color: #1a325a; /* Un color verde azulado oscuro, profesional */
     --secondary-color: #f4f4f4;
@@ -23,16 +19,13 @@ body {
     line-height: 1.6;
 }
 header {
-    width: 100%;
     display: flex;
     justify-content: space-between; 
     align-items: center;
     padding: 0rem 5%;
     background-color: var(--bg-color);
     top: 0;
-    z-index: 900; 
-    /* Añade esta línea para recortar cualquier contenido que se salga */
-    overflow-x: hidden; 
+    z-index: 900; /* Asegura que esté sobre otros elementos */
 }
 header.sticky-nav {
     position: sticky;
@@ -328,13 +321,13 @@ header.sticky-nav {
     position: relative; /* Clave para posicionar el icono */
     max-width: 700px; /* Ancho máximo (como antes) */
     margin: 2rem auto; /* Centrado (como antes) */
+    z-index: 200;   
 }
 #catalog-search .search-button {
     position: absolute; /* Se superpone al input */
     left: 15px; /* Distancia desde la izquierda */
     top: 50%;
-    transform: translateY(-50%); /* Centrado vertical perfecto */
-    
+    transform: translateY(-50%); /* Centrado vertical perfecto */    
     /* Quitamos estilos de botón para que sea solo un icono */
     background: none;
     border: none;
@@ -403,24 +396,6 @@ footer {
 }
 /* ======== ESTILOS PÁGINA CATÁLOGO ======== */
 
-/* Título de la página */
-.page-title-header {
-    text-align: center;
-    padding: 2rem 5%;
-    background-color: var(--secondary-color);
-    border-bottom: 1px solid #eee;
-}
-.page-title-header h2 {
-    font-size: 2.5rem;
-    color: var(--primary-color);
-    margin: 0;
-}
-.page-title-header p {
-    font-size: 1.1rem;
-    color: #555;
-    margin-top: 0.5rem;
-}
-
 /* Diseño principal de la página de catálogo */
 .catalog-page-layout {
     display: grid;
@@ -430,7 +405,6 @@ footer {
     /* FIX: More internal padding for better look */
     padding: 2rem 5%; 
     max-width: 1400px; /* Slightly wider overall container */
-    margin: 0 auto; /* Centering the main content block */
 }
 
 /* ======== BARRA DE FILTROS ======== */
@@ -446,7 +420,6 @@ footer {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     /* FIX: Ocultar el sidebar en escritorio */
     display: none; 
-    transform: none !important;
 }
 
 
@@ -561,11 +534,8 @@ footer {
         font-size: 2em;
     }
     #catalog-search {
-        /* Usa un ancho del 90% para que no toque los bordes.
-        'max-width' es anulado por 'width'.
-        */
-        width: 90%;
-        max-width: 90%; /* Asegura que la regla se aplique */
+        width: 80%;
+        max-width: 80%; /* Asegura que la regla se aplique */
         margin: 2rem auto; /* Mantiene el centrado y el espacio vertical */
     }
     header {
@@ -674,12 +644,10 @@ footer {
         margin-bottom: 2rem;
     }
 
-    /* ======== PÁGINA CATÁLOGO (Tus reglas) ======== */
-    /* ======== PÁGINA CATÁLOGO (Tus reglas) ======== */
     .catalog-page-layout {
         /* Asegúrate de que este también tenga padding */
         padding: 1rem 3%;
-        grid-template-columns: 1fr;
+        grid-template-columns: 2fr;
     }
     .product-grid {
         /* Se mantiene en 2 columnas para móvil */
@@ -736,18 +704,14 @@ footer {
 
     /* === NUEVO SIDEBAR DE PANELES DESLIZANTES === */
     .filter-sidebar {
-        /* Deshabilita los estilos de escritorio */
         position: fixed;
         top: 0;
         right: 0;
-        z-index: 2000;
-        box-shadow: -2px 0 10px rgba(0,0,0,0.1);
-        
+        z-index: 3000;
+        box-shadow: -2px 0 10px rgba(0,0,0,0.1);  
         /* Restaura la animación de móvil */
-        transform: translateX(100%); 
+        transform: translateX(-100%); 
         transition: transform 0.3s ease-in-out;
-        /* FIX: Asegura que se muestre en móvil aunque el estilo de escritorio diga display: none */
-        display: block !important;
     }
     .filter-sidebar.active {
         transform: translateX(0);
@@ -782,11 +746,11 @@ footer {
     /* Paneles activos y de transición */
     .filter-panel.active {
         transform: translateX(0); /* Panel actual (visible) */
-        z-index: 10;
+        z-index: 2000;
     }
     .filter-panel.parent {
         transform: translateX(-50%); /* Panel padre (se va a la izq) */
-        z-index: 5;
+        z-index: 2000;
     }
 
     /* Encabezado del panel */
@@ -798,7 +762,7 @@ footer {
         position: sticky;
         top: 0;
         background: var(--bg-color);
-    }
+    }   
     .panel-header h3 {
         font-size: 1.3rem;
         margin: 0;
@@ -963,13 +927,6 @@ footer {
     line-height: 1.1;
 }
 
-.product-price {
-    font-size: 2.2em;
-    font-weight: bold;
-    color: var(--primary-color); /* Color principal de tu marca */
-    margin-bottom: 1rem;
-}
-
 .product-description {
     font-size: 1.05em;
     line-height: 1.6;
@@ -999,76 +956,11 @@ footer {
     margin-top: 1.5rem;
 }
 
-.quantity-selector {
-    display: flex;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    overflow: hidden;
-}
-
-.quantity-btn {
-    background-color: #f0f0f0;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-size: 1.2em;
-    transition: background-color 0.2s;
-}
-
-.quantity-btn:hover {
-    background-color: #e0e0e0;
-}
-
-.quantity-input {
-    width: 50px;
-    border: none;
-    text-align: center;
-    font-size: 1em;
-    padding: 8px 0;
-}
-
-/* Oculta flechas en Chrome/Safari */
-.quantity-input::-webkit-outer-spin-button,
-.quantity-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
 .add-to-cart-btn {
     /* Si tu cta-button ya tiene estilos, esto los complementa */
     padding: 12px 25px;
     font-size: 1.1em;
     flex-grow: 1; /* Ocupa el espacio disponible */
-}
-
-.wishlist-btn {
-    background: none;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    cursor: pointer;
-    color: #888;
-    transition: all 0.2s;
-}
-.wishlist-btn:hover {
-    background-color: #f0f0f0;
-    color: var(--primary-color);
-    border-color: var(--primary-color);
-}
-.wishlist-btn svg {
-    width: 24px;
-    height: 24px;
-    display: block;
-}
-
-.stock-info {
-    font-size: 0.95em;
-    color: #e00; /* Rojo para poco stock */
-    font-weight: bold;
-    margin-top: 10px;
-}
-.stock-info span {
-    color: var(--primary-color); /* O el color que quieras para el número */
 }
 
 
