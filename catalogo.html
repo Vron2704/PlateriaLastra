@@ -40,6 +40,9 @@
     </header>
    
     <main>
+        
+
+
         <form class="search-form" id="catalog-search">
                 <input type="search" class="search-input" placeholder="Buscar...">
                 <button type="submit" class="search-button" aria-label="Buscar">
@@ -48,7 +51,22 @@
                     </svg>
                 </button>
         </form>
+    <div class="divider">
+        <ol class="breadcrumb" id="breadcrumb-nav">
+                <li class="breadcrumb-item" >
+                    <a href="/" aria-label="Enlace de Inicio">
+                        <svg class="homeicon" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg" fill="currentColor">
+                            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                        </svg>
+                    </a>
+                </li>
+                <li class="breadcrumb-item active"><a href="/catalogo.html">Catalogo</a></li>
+                <li class="breadcrumb-item"><a href="">a</a></li>
+        </ol>
+    </div>
+        
     <div class="catalog-page-layout">
+            
         <div class="mobile-filter-bar">
             <button class="open-filter-btn" id="open-filter-btn">
                 <span>Filtrar por</span>
@@ -56,7 +74,7 @@
                     <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/>
                 </svg>
             </button>
-    </div>
+        </div>
 
     <aside class="filter-sidebar" id="filter-sidebar">
 
@@ -108,7 +126,6 @@
                 No se encontraron productos que coincidan con su búsqueda.
             </p>
         </div>
-    </div>
     </div>  
 
     <footer>

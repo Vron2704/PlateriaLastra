@@ -120,7 +120,6 @@ export async function cargarOpcionesPanel(columna, panelId) {
             const listItem = document.createElement('li');
             
             const isFiltered = filtrosGlobales[columna] === valor ? 'filtered' : '';
-
             listItem.className = `nav-link ${isFiltered}`;
             listItem.dataset.valor = valor;
             listItem.dataset.columna = columna;
@@ -129,7 +128,6 @@ export async function cargarOpcionesPanel(columna, panelId) {
         });
     }
 }
-
 /**
  * EXPORTA: Recolecta filtros y llama a cargarProductos
  */

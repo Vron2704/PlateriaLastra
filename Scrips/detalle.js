@@ -91,8 +91,52 @@ async function cargarDetalleProducto() {
                 </button>
             </div>
             `;
-
     }
+cargarRecomendados(data);
+document.addEventListener('DOMContentLoaded', cargarDetalleProducto);
+}
+async function cargarRecomendados(productoActual) {
+    const listaTarjetasContainer = document.querySelector('.lista-tarjetas');
+    if (!listaTarjetasContainer) return;
+
+    // 1. Obtener productos de la misma categoría (excluyendo el actual)
+    const { data, error } = await supabase
+        .from('productos')
+        .select('id, nombre, img_url') // Seleccionamos solo los campos necesarios para la tarjeta
+        .eq('categoria', productoActual.categoria) // Filtra por la misma categoría
+        .neq('id', productoActual.id)           // Excluye el producto que se está viendo
+        .limit(4);                             // Limita a 4 recomendaciones (o el número que prefieras)
+
+    if (error) {
+        console.error('Error al cargar recomendados:', error);
+        listaTarjetasContainer.innerHTML = '<p>No se pudieron cargar las recomendaciones.</p>';
+        return;
+    }
+
+    if (!data || data.length === 0) {
+        // Ocultar la sección si no hay recomendaciones
+        const hubSection = document.querySelector('.productos-recomendados-hub');
+        if (hubSection) hubSection.style.display = 'none';
+        return;
+    }
+
+    // 2. Generar el HTML de las tarjetas
+    listaTarjetasContainer.innerHTML = ''; // Limpiar el contenido de ejemplo del HTML
+
+    data.forEach(producto => {
+        const tarjetaHTML = `
+            <a href="/detalle-producto.html?id=${producto.id}" class="tarjeta-producto" onclick="window.location.reload()">
+                <div class="imagen-cuadrada">
+                    <img src="${producto.img_url}" alt="${producto.nombre}">
+                </div>
+                <div class="info-producto">
+                    <p class="titulo-producto">${producto.nombre}</p>
+                    <button class="boton-ver-mas">Ver Artículo</button>
+                </div>
+            </a>
+        `;
+        listaTarjetasContainer.insertAdjacentHTML('beforeend', tarjetaHTML);
+    });
 }
 
 document.addEventListener('DOMContentLoaded', cargarDetalleProducto);

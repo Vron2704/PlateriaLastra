@@ -1,4 +1,7 @@
 /* PlateriaLastra/styles.css */
+*, *::before, *::after {
+    box-sizing: border-box;
+}   
 :root {
     --primary-color: #1a325a; /* Un color verde azulado oscuro, profesional */
     --secondary-color: #f4f4f4;
@@ -250,50 +253,98 @@ header.sticky-nav {
     background-color: #253b56; /* Un tono más oscuro */
     color : rgb(255, 255, 255);
 }
+.homeicon {
+    width: 30px;
+    height: 30px;
+}
+
+.breadcrumb {
+    align-items: center;
+    align-content: center;
+    /* Quita los estilos de lista predeterminados */
+    list-style: none;
+    padding: 0;
+    margin: 0px 177px;
+    flex-direction:row;
+    /* Para que los elementos se muestren en línea */
+    display: flex;
+    font-size: 14px; /* Ajusta el tamaño de fuente */
+    color: #6c757d; /* Color para el texto inactivo */
+}
+
+.breadcrumb-item a {
+    /* Estilo para los enlaces activos */
+    text-decoration: none;
+    color: #000000; /* Color para los enlaces */
+    white-space: nowrap; /* Evita que los enlaces se rompan */
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    /* Esto crea el separador '>', aplicado a todos excepto el primero */
+    content: ">";
+    padding-right: 8px;
+    padding-left: 8px;
+    color: #6c757d; /* Color del separador */
+    display: inline-block;
+}
+
+.breadcrumb-item.active {
+    /* Estilo para el elemento de la página actual */
+    color: #343a40; /* Un color más oscuro para el elemento activo */
+    font-weight: 500; /* Opcional: para que se destaque un poco */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Opcional: para manejar títulos muy largos */
+    max-width: 400px; /* Limita el ancho del título, ajusta según necesidad */
+}
+
 
 /* ======== CATÁLOGO DE PRODUCTOS ======== */
 .product-card-link {
-    display: block; /* Hace que el <a> ocupe su espacio en el grid */
-    text-decoration: none; /* Quita el subrayado azul */
+ /* Hace que el <a> ocupe su espacio en el grid */
+ /* Quita el subrayado azul */
     color: inherit; /* Mantiene el color de texto normal */
 }
 .mobile-filter-bar {
     display: none;
 }
-.filter-actions {
-    display: none;
-}
-.product-catalog {
-    padding: 4rem 5% 10rem  5%;
-    text-align: center;;
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(250px, 2fr));
+    gap: 2rem;
 }
 
-.product-catalog h2 {
+.product-grid h2 {
     font-size: 2rem;
     margin-bottom: 2rem;
     font-weight: 600;
 }
 
 .product-grid {
+    display: grid;
+    justify-content: center;
     /* FIX: Revierte a 4 columnas para escritorio como solicitado */
-    grid-template-columns: repeat(4, 1fr); 
+    grid-template-columns: repeat(3, 1fr); 
     gap: 2rem;
 }
 
 .product-card {
     background-color: var(--bg-color);
-    border: 1px solid #ffffff;
     border-radius: 8px;
+    border: 10px black;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 10px;
+    box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.05);
 }
-.product-card button {
-    text-align: center;
-}
-
 .product-card:hover {
     transform: translateY(-5px);
-    box-shadow: 1px 10px 20px rgba(0, 0, 0, 0.05);
+    box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.product-card button {
+    text-align: center;
 }
 
 .product-card img {
@@ -399,27 +450,25 @@ footer {
 /* Diseño principal de la página de catálogo */
 .catalog-page-layout {
     display: grid;
+    grid-template-columns: 280px 1fr;
     /* FIX: Se elimina la columna del sidebar, el catálogo ocupa todo el ancho */
-    grid-template-columns: 1fr;
     gap: 2rem;
     /* FIX: More internal padding for better look */
-    padding: 2rem 5%; 
-    max-width: 1400px; /* Slightly wider overall container */
+    padding: 2rem 0%; 
+    max-width: 1600px; /* Slightly wider overall container */
+    margin: 0 auto;
+    justify-content:space-between; /* Center the layout */
 }
 
 /* ======== BARRA DE FILTROS ======== */
 .filter-sidebar {
-    background-color: var(--secondary-color); /* Light grey background */
-    border: none; /* Removing border to simplify */
+    background-color: var(--bg-color);
+    border: 1px solid #eee;
     border-radius: 8px;
     padding: 1.5rem;
     position: sticky;
     top: 100px;
-    align-self: start; 
-    /* NEW: Add a subtle shadow for depth on desktop */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    /* FIX: Ocultar el sidebar en escritorio */
-    display: none; 
+    align-self: start;
 }
 
 
@@ -447,7 +496,6 @@ footer {
     transition: transform 0.3s ease;
 }
 .filter-group .filter-list {
-    display: none;
     padding-left: 0.5rem; /* Opcional: indenta los filtros */
 }
 .filter-group.active .filter-list {
@@ -489,10 +537,6 @@ footer {
 }
 
 /* ======== CONTENEDOR DE PRODUCTOS ======== */
-.product-grid-container {
-    /* El .product-grid y .product-card ya tienen estilos del CSS anterior */
-    min-width: 0; /* Arreglo para grids */
-}
 .overlay {
     position: fixed;
     top: 0;
@@ -536,7 +580,7 @@ footer {
     #catalog-search {
         width: 80%;
         max-width: 80%; /* Asegura que la regla se aplique */
-        margin: 2rem auto; /* Mantiene el centrado y el espacio vertical */
+        margin: 1.5rem auto; /* Mantiene el centrado y el espacio vertical */
     }
     header {
         display: block;
@@ -705,8 +749,12 @@ footer {
     /* === NUEVO SIDEBAR DE PANELES DESLIZANTES === */
     .filter-sidebar {
         position: fixed;
+        padding: 1rem;
+        width: 80%;
+        max-width: 320px;
+        height: 100vh;
         top: 0;
-        right: 0;
+        left: 0;
         z-index: 3000;
         box-shadow: -2px 0 10px rgba(0,0,0,0.1);  
         /* Restaura la animación de móvil */
@@ -757,7 +805,7 @@ footer {
     .panel-header {
         display: flex;
         align-items: center;
-        padding: 1rem 1.5rem;
+        padding: 1rem 1rem;
         border-bottom: 1px solid #eee;
         position: sticky;
         top: 0;
@@ -782,7 +830,7 @@ footer {
     /* Lista de filtros (ahora son enlaces/botones) */
     .filter-list {
         list-style: none;
-        padding: 0;
+        padding: 1rem;
         margin: 0;
         flex-grow: 1; /* Ocupa el espacio hasta los botones */
     }
@@ -829,7 +877,7 @@ footer {
         position: sticky;
         bottom: 0;
     }
-    
+}    
 
 .filter-btn-clear, 
 .filter-btn-apply {
@@ -907,9 +955,10 @@ footer {
 
 #main-product-image {
     width: 100%;
-    height: auto;
-    display: block;
-    object-fit: contain; /* Para que la imagen se vea completa */
+    height: 100%;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    object-fit: cover; /* Para que la imagen se vea completa */
 }
 
 /* --- Columna de Información del Producto --- */
@@ -966,6 +1015,12 @@ footer {
 
 /* --- Responsive para Móviles y Tablets --- */
 @media (max-width: 992px) {
+    .breadcrumb{
+        align-items: center;
+        margin: 10px 30px;
+    }
+
+    }
     .product-detail-page-container {
         grid-template-columns: 1fr; /* Una sola columna en móvil */
         gap: 30px;
@@ -1011,4 +1066,65 @@ footer {
 
     .add-to-cart-btn {
         width: 100%;
-    }}}
+    }}
+/* Para el layout del hub */
+.productos-recomendados-hub {
+    /* Mantenemos el ancho al 100% de su padre (main) */
+    width: 100%; 
+    padding: 20px;
+
+    /* AÑADE ESTAS DOS PROPIEDADES */
+    max-width: 1200px; /* Limita el ancho al mismo valor que el detalle */
+    margin: 40px auto;  /* Centra la sección en la página */
+    /* El padding lateral ya está, lo cual es bueno */
+}
+.lista-tarjetas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    gap: 20px;
+}
+.tarjeta-producto {
+    /* Estilo general para la tarjeta */
+    text-decoration: none; /* Quita el subrayado del enlace */
+    display: block;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+}
+
+.tarjeta-producto:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Para forzar las imágenes a ser cuadradas */
+.imagen-cuadrada {
+    aspect-ratio: 1 / 1;
+    overflow:hidden;
+}
+
+.imagen-cuadrada img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.info-producto {
+    padding: 15px;
+    text-align: center;
+}
+
+.titulo-producto {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+/* Estilo para el botón dentro de la tarjeta */
+.boton-ver-mas {
+    width: 100%;
+    padding: 8px;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
