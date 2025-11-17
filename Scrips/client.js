@@ -128,6 +128,7 @@ export async function cargarOpcionesPanel(columna, panelId) {
         });
     }
 }
+
 /**
  * EXPORTA: Recolecta filtros y llama a cargarProductos
  */

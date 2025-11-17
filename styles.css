@@ -1019,8 +1019,6 @@ footer {
         align-items: center;
         margin: 10px 30px;
     }
-
-    }
     .product-detail-page-container {
         grid-template-columns: 1fr; /* Una sola columna en móvil */
         gap: 30px;
@@ -1066,7 +1064,8 @@ footer {
 
     .add-to-cart-btn {
         width: 100%;
-    }}
+    }
+}
 /* Para el layout del hub */
 .productos-recomendados-hub {
     /* Mantenemos el ancho al 100% de su padre (main) */
