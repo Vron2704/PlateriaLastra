@@ -7,7 +7,9 @@
     --secondary-color: #f4f4f4;
     --text-color: #333;
     --bg-color: #ffffff;
-}
+    --relative-color: #253b56;
+    --relative-logo-color: #f1a5c1;
+
 a {
     text-decoration: none;
     color: inherit;
@@ -28,12 +30,13 @@ header {
     padding: 0rem 5%;
     background-color: var(--bg-color);
     top: 0;
-    z-index: 900; /* Asegura que esté sobre otros elementos */
+    z-index: 900;
+       /* Asegura que esté sobre otros elementos */
 }
 header.sticky-nav {
-    position: sticky;
+    position: relative;
     top: 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
 }
 .intro {
     padding: 4rem 5%;
@@ -223,7 +226,6 @@ header.sticky-nav {
 
 .hero-content {
     padding: 4rem 5%;
-
 }
 
 .hero p {
@@ -233,8 +235,59 @@ header.sticky-nav {
     color: #1a325a;
     line-height: 1.2;
     font-stretch: 62.5%;
+    margin-block-end: 0.5em;
+}
+/*INDEX BUTTOM*/
+.cta {
+    border: none;
+    background: none;
+    cursor: pointer;
 }
 
+.cta span {
+    padding-bottom: 7px;
+    letter-spacing: 4px;
+    font-size: 14px;
+    padding-right: 15px;
+    text-transform: uppercase;
+}
+
+.cta svg {
+    transform: translateX(-8px);
+    transition: all 0.3s ease;
+}
+
+.cta:hover svg {
+    transform: translateX(0);
+}
+
+.cta:active svg {
+    transform: scale(0.9);
+}
+
+.hover-underline-animation {
+    position: relative;
+    color: black;
+    padding-bottom: 20px;
+}
+
+.hover-underline-animation:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #000000;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+.cta:hover .hover-underline-animation:after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
 .cta-button {
     text-decoration: none;
     background-color: none;
@@ -352,6 +405,7 @@ header.sticky-nav {
     height: 250px;
     object-fit: cover;
     display: block;
+    border-radius: 20px;
 }
 
 .product-card h3 {
@@ -364,7 +418,113 @@ header.sticky-nav {
     font-size: 0.9rem;
     color: #555;
     margin: 0 1rem 1rem;
-    text-align: left;
+    text-align: center;
+}
+/* Layout Principal: 2 Columnas */
+.catalog-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr; /* 250px sidebar, el resto para productos */
+    
+    /* 1. AUMENTAR EL ANCHO: Cambia 1200px por un valor mayor o porcentaje */
+    max-width: 80%; /* O puedes poner 1600px. Al usar % se pega más a los bordes */
+    
+    /* 2. CENTRAR: Mantiene el bloque centrado */
+    margin: 0 auto; 
+    
+    /* 3. REDUCIR GAP: Espacio entre la barra lateral y los productos */
+    gap: 20px; /* Antes 30px, redúcelo si quieres que estén más cerca */
+    
+    /* 4. REDUCIR PADDING: Espacio interno del contenedor */
+    padding: 10px 20px 70px; /* Arriba/Abajo 10px, Izquierda/Derecha 20px */
+    
+    align-items: start;
+}
+
+/* Estilos Sidebar */
+.filters-sidebar {
+    background: #fff;
+    padding: 20px;
+    border-right: 1px solid #eee; /* Línea divisoria sutil */
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.filtro-section {
+    margin-bottom: 25px;
+}
+
+.filtro-section h4 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.filter-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.filter-item {
+    padding: 8px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #555;
+    border-radius: 4px;
+    transition: background 0.2s;
+    display: block; /* Para que ocupe el ancho */
+}
+
+.filter-item:hover {
+    background-color: #f9f9f9;
+    color: #000;
+}
+
+/* Estado Activo (Negro como en tu imagen) */
+.filter-item.active {
+    background-color: #000;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Estilos Grid Productos */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+/* Responsivo para Móvil (Colapsar a 1 columna) */
+@media (max-width: 768px) {
+    .catalog-layout {
+    grid-template-columns: 1fr; /* 250px sidebar, el resto para productos */
+    
+    /* 1. AUMENTAR EL ANCHO: Cambia 1200px por un valor mayor o porcentaje */
+    max-width: 100%; /* O puedes poner 1600px. Al usar % se pega más a los bordes */
+    
+    /* 2. CENTRAR: Mantiene el bloque centrado */
+    margin: 0 1px; 
+    
+    /* 3. REDUCIR GAP: Espacio entre la barra lateral y los productos */
+    gap: 20px; /* Antes 30px, redúcelo si quieres que estén más cerca */
+    
+    /* 4. REDUCIR PADDING: Espacio interno del contenedor */
+    padding: 10px 20px 70px; /* Arriba/Abajo 10px, Izquierda/Derecha 20px */
+    
+    align-items: start;
+    }
+    .filters-sidebar {
+        border-right: none;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 20px;
+    }
 }
 
 /* 1. Resuelve "sin tanta envergadura" y "centrada" */
@@ -405,7 +565,8 @@ header.sticky-nav {
 
 /* ======== PIE DE PÁGINA ======== */
 footer {
-    background-color: #1a325a;
+    background-color: var(--relative-color);
+    box-shadow:0 -20px 15px rgba(0, 0, 0, 0.2);
     color: #aaa;
     padding: 3rem 5%;
 }
@@ -698,6 +859,7 @@ footer {
         grid-template-columns: repeat(2, 1fr);
         gap: 1.5rem; /* Reduce el espacio entre tarjetas */
     }
+    
     .nav-links .nav-menu-header {
         display: flex;
         justify-content: space-between;
@@ -1126,4 +1288,1100 @@ footer {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+}
+/* Layout Principal (Contenedor Flex) */
+.main-wrapper {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    gap: 30px;
+}
+
+/* --- SIDEBAR ESCRITORIO --- */
+.desktop-sidebar {
+    width: 250px;
+    flex-shrink: 0; /* No se encoge */
+    border-right: 1px solid #eee;
+    padding-right: 20px;
+}
+
+.filter-group {
+    margin-bottom: 20px;
+}
+
+.filter-group h4 {
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    color: #666;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+/* --- ESTILOS DE LA LISTA DE FILTROS (Común para Móvil y Desktop) --- */
+.filter-options-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.filter-item {
+    padding: 8px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.2s, color 0.2s;
+    font-size: 0.9rem;
+    color: #444;
+}
+
+.filter-item:hover {
+    background-color: #f0f0f0;
+}
+
+/* Estado ACTIVO (Seleccionado) */
+.filter-item.active {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+    position: relative;
+}
+
+.filter-item.active::after {
+    content: '✓';
+    position: absolute;
+    right: 10px;
+}
+
+/* Estado BLOQUEADO (Cascada) */
+.bloqueado {
+    opacity: 0.4;
+    pointer-events: none; /* No permite click */
+    font-style: italic;
+}
+
+/* --- GRILLA PRODUCTOS --- */
+.catalog-content {
+    flex-grow: 1;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.product-card {
+    border: 1px solid #eee;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+.product-card:hover { transform: translateY(-3px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.product-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 4px; }
+.product-card-link { text-decoration: none; color: inherit; }
+
+/* --- RESPONSIVE MEDIA QUERIES --- */
+
+/* Móvil (Menos de 768px) */
+@media (max-width: 768px) {
+    .desktop-only {
+        display: none !important; /* Ocultar sidebar escritorio */
+    }
+    
+    .mobile-only {
+        display: block !important;
+    }
+
+    .main-wrapper {
+        display: block; /* Quitar flex para que sea columna */
+        padding: 10px;
+    }
+    
+    /* Menú Lateral Móvil (Offcanvas) */
+    .side-menu {
+        position: fixed;
+        top: 0;
+        height: 100vh;
+        width: 280px;
+        background: white;
+        z-index: 1000;
+        transition: transform 0.3s ease;
+        padding: 20px;
+        overflow-y: auto;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    }
+
+    /* Lógica de abrir/cerrar menús */
+    #nav-links-menu { left: 0; transform: translateX(-100%); }
+    #filter-sidebar { right: 0; transform: translateX(100%); } /* Sale de la derecha */
+
+    #nav-links-menu.active { transform: translateX(0); }
+    #filter-sidebar.active { transform: translateX(0); }
+
+    .overlay.active {
+        display: block;
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 999;
+    }
+    
+    /* Acordeón nativo de HTML para móvil */
+    details {
+        margin-bottom: 10px;
+        border-bottom: 1px solid #eee;
+    }
+    summary {
+        padding: 10px 0;
+        font-weight: bold;
+        cursor: pointer;
+        list-style: none; /* Quitar flecha por defecto si quieres */
+    }
+}
+
+/* Escritorio (Más de 769px) */
+@media (min-width: 769px) {
+    .mobile-only {
+        display: none !important;
+    }
+    .side-menu {
+        display: none; /* Asegurar que los menús móviles no estorben */
+    }
+    .overlay { display: none !important; }
+}
+.filtro-section {
+    transition: all 0.3s ease;
+    opacity: 1;
+    max-height: 500px; /* O un valor alto */
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.filtro-section.hidden {
+    display: none; /* O puedes usar opacity: 0 y max-height: 0 para animación */
+}
+
+.filter-item {
+    cursor: pointer;
+    padding: 8px;
+    border: 1px solid #eee;
+    margin-bottom: 5px;
+    border-radius: 4px;
+}
+/* Contenedor del menú desplegable */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* El enlace principal (Catálogo) */
+.dropbtn {
+    text-decoration: none;
+}
+/* El contenido oculto (La cajita blanca) */
+.dropdown-content {
+     display: none; /* Oculto por defecto */
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 100px; /* Ancho mínimo */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.15); /* Sombra suave */
+    border-radius: 12px; /* Bordes redondeados como la foto */
+    padding: 10px 0;
+    z-index: 1000;
+    top: 100%; /* Justo debajo del botón */
+    left: 0;
+}
+
+/* Estilo de los enlaces dentro del dropdown */
+.dropdown-content a {
+    color: #000;
+    padding: 12px 20px;
+    text-decoration: none;
+    display: block;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+/* Hover en los items (Efecto gris/rosa al pasar el mouse) */
+.dropdown-content a:hover {
+    background-color: #f5f5f5; 
+    color: #d63384; /* Color rosado similar a la imagen */
+}
+
+/* Mostrar el menú al pasar el mouse sobre el padre (.dropdown) */
+.dropdown:hover .dropdown-content {
+    display: block;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.dropdown:hover .arrow {
+  transform: rotate(180deg); /* Flecha gira */
+}
+
+/* Animación suave de aparición */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* --- NUEVO DISEÑO DE TARJETA --- */
+
+.product-card {
+    background-color: #fff;
+    border: 0px solid #333; /* Borde grueso y oscuro como en el ejemplo */
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+/* Contenedor de imagen */
+.card-image-container {
+    width: 100%;
+    padding-top: 100%; /* Relación de aspecto 1:1 (cuadrada) */
+    position: relative;
+    background-color: #f9f9f9; /* Fondo gris claro para la imagen */
+    border-bottom: 1px solid #333; /* Línea separadora debajo de la imagen */
+}
+
+.card-image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* O 'cover' según prefieras */
+    padding: 20px; /* Espacio alrededor de la imagen */
+}
+
+/* Información del producto */
+.card-info {
+    padding: 20px 15px 15px;
+    text-align: center; /* Título y descripción centrados */
+    flex-grow: 1; /* Ocupa el espacio disponible */
+}
+
+.card-title {
+    margin: 0 0 10px 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #222;
+}
+
+.card-description {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.4;
+}
+
+/* Pie de tarjeta con botón */
+.card-footer {
+    padding: 15px;
+    border-top: 1px solid #333; /* Línea separadora encima del pie */
+    display: flex;
+    justify-content: flex-end; /* Botón alineado a la derecha */
+    align-items: center;
+    background-color: #fff;
+}
+
+/* Botón de flecha */
+.arrow-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 45px;
+    border: 2px solid #333;
+    border-radius: 6px;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    padding: 0 20px;
+}
+
+.arrow-btn svg {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+}
+
+/* Efecto Hover del Botón */
+.arrow-btn:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+.arrow-btn:hover svg {
+    transform: translateX(3px); /* Pequeña animación de la flecha al pasar el mouse */
+}
+/* Contenedor de imagen (Mantenemos el aspecto cuadrado) */
+.card-image-container {
+    width: 100%;
+    padding-top: 100%; /* Relación 1:1 (cuadrado) */
+    position: relative;
+    background-color: #f9f9f9;
+    border-bottom: 2px solid #333;
+    overflow: hidden; /* Asegura que nada se salga del contenedor */
+}
+
+/* Imagen del producto */
+.card-image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* CAMBIO CLAVE AQUÍ: */
+    object-fit: cover; /* 'cover' hace que la imagen llene todo el espacio, recortando si es necesario */
+    padding: 0; /* Eliminamos el espacio interno para que llegue al borde */
+}
+/* --- ESTILOS RESPONSIVE (MÓVIL) --- */
+@media (max-width: 768px) {
+    
+    /* 1. Ajuste del Layout General */
+    .catalog-layout {
+        /* Colapsar sidebar y grid en una sola columna vertical */
+        grid-template-columns: 1fr; 
+        padding: 10px; /* Menos margen al borde de la pantalla */
+        gap: 20px;
+    }
+
+    /* 2. Grid de Productos: Forzar 2 columnas */
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas exactas */
+        gap: 10px; /* Espacio reducido entre tarjetas para aprovechar pantalla */
+    }
+
+    /* 3. Ajustes de la Tarjeta para Móvil */
+    .product-card {
+        border-radius: 8px; /* Bordes un poco menos curvos para ahorrar espacio */
+    }
+
+    /* Reducir tamaño de textos */
+    .card-info {
+        padding: 10px 8px 0 8px; /* Padding interno más ajustado */
+    }
+
+    .card-title {
+        font-size: 0.9rem; /* Título más pequeño */
+        margin-bottom: 4px;
+        white-space: nowrap;       /* Opcional: Para que no ocupe 2 líneas */
+        overflow: hidden;          /* Opcional: Cortar si es muy largo */
+        text-overflow: ellipsis;   /* Opcional: Poner '...' */
+    }
+
+    .card-description {
+        font-size: 0.7rem; /* Subtítulo pequeño */
+    }
+
+    /* 4. Ajuste del Botón "Más info" */
+    .card-footer {
+        padding: 8px; /* Menos espacio en el pie */
+    }
+
+    .details-btn {
+        padding: 6px 0;
+        font-size: 0.8rem; /* Texto botón pequeño */
+        border-radius: 6px;
+    }
+
+    .details-btn svg {
+        width: 14px; /* Flecha más pequeña */
+        height: 14px;
+    }
+
+    /* Opcional: Ocultar los filtros inicialmente en móvil o estilizarlos */
+    .filters-sidebar {
+        border-right: none;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+    }
+}
+/* --- VARIABLES Y BASE --- */
+:root {
+    --bg-color: #f5f5f7; /* Gris muy claro, premium */
+    --text-main: #1d1d1f;
+    --text-sec: #86868b;
+    --whatsapp-color: #25D366;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+}
+
+/* --- LAYOUT PRINCIPAL (Split Screen) --- */
+.product-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* División 50/50 */
+    min-height: 90vh;
+    max-width: 1400px;
+    margin: 0 auto;
+    gap: 40px;
+    padding: 40px 20px;
+}
+
+/* --- SECCIÓN IMAGEN (Izquierda Sticky) --- */
+.image-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+    position: sticky; /* Efecto pegajoso */
+    top: 40px;
+    height: 80vh; 
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.image-wrapper:hover img {
+    transform: scale(1.05); /* Zoom suave al pasar el mouse */
+}
+
+/* --- SECCIÓN INFO (Derecha) --- */
+.info-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+}
+
+.breadcrumb {
+    color: var(--text-sec);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin: 0 0 20px 0;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+.description {
+    font-size: 1.1rem;
+    color: #444;
+    margin-bottom: 40px;
+    max-width: 500px;
+}
+
+/* Grid de Especificaciones */
+.specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #e1e1e1;
+}
+
+.spec-item {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.spec-label {
+    font-size: 0.8rem;
+    color: var(--text-sec);
+    display: block;
+    margin-bottom: 5px;
+}
+
+.spec-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+/* Botón CTA WhatsApp */
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--whatsapp-color);
+    color: rgb(0, 0, 0);
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 18px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
+    width: fit-content;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4);
+}
+
+/* --- SECCIÓN RECOMENDADOS --- */
+.recommendations-section {
+    background: white;
+    padding: 80px 20px;
+    border-top: 1px solid #eee;
+}
+
+.rec-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.rec-title {
+    font-size: 2rem;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.rec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.rec-card {
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease;
+    display: block;
+}
+
+.rec-card:hover {
+    transform: translateY(-10px);
+}
+
+.rec-img-box {
+    background: var(--bg-color);
+    border-radius: 20px;
+    overflow: hidden;
+    aspect-ratio: 1/1;
+    margin-bottom: 15px;
+}
+
+.rec-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.rec-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.rec-cat {
+    font-size: 0.9rem;
+    color: var(--text-sec);
+}
+
+/* --- RESPONSIVE MOBILE --- */
+@media (max-width: 900px) {
+    .product-hero {
+        grid-template-columns: 1fr;
+        gap: 0;
+        padding-top: 0;
+    }
+    .image-wrapper {
+        position: relative;
+        top: 0;
+        height: 50vh;
+        border-radius: 0 0 30px 30px;
+        margin-bottom: 30px;
+    }
+    h1 { font-size: 2.5rem; }
+    .info-wrapper { padding: 0 20px; }
+    .cta-button { width: 100%; box-sizing: border-box; }
+}
+/* --- Estilos Generales del Footer --- */
+.footer-elegante {
+    background-color: #122033; /* Azul oscuro profundo, más premium */
+    color: #e0e0e0; /* Color de texto blanco roto, más suave a la vista */
+    padding: 50px 0 20px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Usa tu tipografía principal si tienes una */
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    /* Creamos 4 columnas en escritorio */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+/* --- Tipografía y Encabezados --- */
+.footer-heading {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+/* Pequeña línea decorativa bajo los títulos */
+.footer-heading::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 30px;
+    height: 2px;
+    background-color: #c4a77d; /* Color acento dorado/beige elegante */
+}
+
+.footer-text {
+    opacity: 0.9;
+}
+
+/* --- Enlaces --- */
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: #e0e0e0;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+/* Efecto hover elegante: cambio de color y ligero movimiento */
+.footer-links a:hover {
+    color: #c4a77d; /* Color dorado al pasar el mouse */
+    transform: translateX(5px);
+}
+
+/* --- Iconos Sociales --- */
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.social-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255,255,255,0.05); /* Fondo sutil */
+    color: #ffffff;
+    border-radius: 50%; /* Círculos */
+    text-decoration: none;
+    font-size: 18px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.social-link:hover {
+    background-color: #c4a77d; /* Fondo dorado al hover */
+    color: #122033; /* Icono oscuro para contraste */
+    transform: translateY(-3px); /* Efecto de elevación */
+}
+
+.contact-info p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.contact-info i {
+    color: #c4a77d;
+}
+
+/* --- Mapa --- */
+.map-container {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    border: 2px solid rgba(196, 167, 125, 0.3); /* Borde sutil dorado */
+}
+
+.map-container iframe {
+    display: block; /* Elimina espacios fantasma */
+}
+
+/* --- Barra Inferior (Copyright) --- */
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
+    padding-top: 25px;
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+/* --- Responsive Design (Móviles y Tablets) --- */
+@media (max-width: 992px) {
+    .footer-container {
+        /* En tablets, 2 columnas */
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .footer-container {
+        /* En móviles, 1 columna */
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    .footer-heading::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .footer-col {
+        text-align: center;
+    }
+    .social-icons, .contact-info p {
+        justify-content: center;
+    }
+}
+/* --- SECCIÓN CONTACTO --- */
+.contact-section {
+    padding: 60px 20px;
+    background-color: #f9f9f9; /* Fondo gris muy suave */
+    min-height: 80vh; /* Para que ocupe buen espacio vertical */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-container {
+    max-width: 1100px;
+    width: 100%;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05); /* Sombra elegante */
+    border-radius: 12px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr; /* Columna info más pequeña que el form */
+}
+
+/* --- COLUMNA IZQUIERDA (INFO) --- */
+.contact-info-box {
+    background-color: #122033; /* Azul oscuro de tu marca */
+    color: #fff;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.section-title {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.contact-desc {
+    margin-bottom: 40px;
+    opacity: 0.8;
+    line-height: 1.6;
+}
+
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+
+.info-item i {
+    font-size: 1.5rem;
+    color: #c4a77d; /* Dorado */
+    margin-right: 20px;
+    margin-top: 5px;
+}
+
+.info-item h4 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+.info-item p {
+    font-size: 0.95rem;
+    opacity: 0.8;
+    margin: 0;
+}
+
+.social-links-contact {
+    margin-top: auto; /* Empuja iconos al final */
+    display: flex;
+    gap: 15px;
+}
+
+.social-links-contact a {
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.social-links-contact a:hover {
+    background: #c4a77d;
+    color: #122033;
+}
+
+/* --- COLUMNA DERECHA (FORMULARIO) --- */
+.contact-form-box {
+    padding: 50px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: 0.3s;
+    background-color: #fbfbfb;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+    border-color: #122033; /* Azul al enfocar */
+    background-color: #fff;
+    outline: none;
+}
+
+.btn-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #122033;
+    color: #fff;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: 600;
+}
+
+.btn-submit:hover {
+    background-color: #c4a77d; /* Dorado al hover */
+    color: #122033;
+    transform: translateY(-2px);
+}
+.dropdown-mobile {
+    display: none;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    .contact-container {
+        grid-template-columns: 1fr; /* Una sola columna en móvil */
+    }
+    .contact-info-box, .contact-form-box {
+        padding: 30px;
+    }
+    .contact-section {
+        padding: 20px;
+    }
+}
+/* --- RESPONSIVE (MÓVIL - Max 768px) --- */
+/* --- ESTILOS SOLO PARA MÓVIL --- */
+@media (max-width: 768px) {
+    .dropdown {
+        display: none
+    }
+    .dropdown-mobile {
+        display: block;
+    }
+    /* 1. CONTENEDOR PRINCIPAL DEL MENÚ (SIDEBAR) */
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%; /* Oculto a la DERECHA */
+        left: auto;   /* Anulamos el left */
+        width: 300px; /* Un poco más ancho para elegancia */
+        height: 100vh;
+        background-color: #ffffff;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0;
+        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Animación suave */
+        z-index: 1002;
+        box-shadow: -5px 0 25px rgba(0,0,0,0.15); /* Sombra hacia la izquierda */
+        display: flex; /* Aseguramos que sea flex */
+    }
+
+    /* Clase activa para abrir */
+    .nav-links.active {
+        right: 0; /* Se desliza a la vista */
+    }
+
+    /* 2. CABECERA (Azul Oscuro) */
+    .nav-menu-header {
+        width: 100%;
+        padding: 25px 30px;
+        background-color: #122033; /* Azul marca */
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .menu-title {
+        font-family: 'Helvetica Neue', sans-serif; /* O tu fuente elegante */
+        font-size: 1.1rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+
+    .close-menu-btn {
+        background: none;
+        border: none;
+        color: #c4a77d; /* Dorado */
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: transform 0.3s;
+    }
+    .close-menu-btn:hover { transform: rotate(90deg); }
+
+    /* 3. ITEMS DEL MENÚ */
+    .nav-links > li {
+        width: 100%;
+        border-bottom: 1px solid rgba(0,0,0,0.05); /* Separador sutil */
+    }
+
+    .nav-item {
+        display: block;
+        padding: 18px 30px;
+        font-size: 1rem;
+        color: #333;
+        text-decoration: none;
+        font-weight: 500;
+        transition: background 0.3s, color 0.3s;
+        cursor: pointer;
+    }
+
+    .nav-item:hover {
+        color: #122033;
+        background-color: #f9f9f9;
+    }
+
+    /* 4. ACORDEÓN (CATÁLOGO) */
+    .dropdown-mobile {
+        width: 100%;
+        background: #fff;
+    }
+
+    .accordion-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 30px; /* Espacio para la flecha */
+        cursor: pointer;
+    }
+
+    .arrow-icon {
+        color: #999;
+        font-size: 0.9rem;
+        transition: transform 0.3s ease;
+    }
+
+    /* Submenú oculto por defecto */
+    .dropdown-content-mobile {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        max-height: 0; /* Altura 0 para ocultar */
+        overflow: hidden;
+        background-color: #f4f4f4; /* Fondo gris muy claro */
+        transition: max-height 0.3s ease-out; /* Animación de deslizado */
+    }
+
+    .dropdown-content-mobile a {
+        display: block;
+        padding: 15px 30px 15px 45px; /* Más indentación */
+        color: #555;
+        text-decoration: none;
+        font-size: 0.95rem;
+        border-bottom: 1px solid rgba(0,0,0,0.03);
+    }
+
+    .dropdown-content-mobile a:hover {
+        color: #c4a77d; /* Dorado */
+        background-color: #eeeeee;
+    }
+
+    /* CLASE ACTIVADA POR JS PARA ABRIR ACORDEÓN */
+    .dropdown-mobile.open .dropdown-content-mobile {
+        max-height: 300px; /* Altura suficiente para mostrar contenido */
+    }
+
+    .dropdown-mobile.open .arrow-icon {
+        transform: rotate(180deg); /* Flecha gira */
+        color: #c4a77d;
+    }
+    
+    .dropdown-mobile.open .accordion-header {
+        background-color: #fafafa;
+        color: #122033;
+        font-weight: bold;
+    }
 }

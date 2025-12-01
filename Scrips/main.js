@@ -1,171 +1,128 @@
-// /Scrips/main.js
-
 import { 
     cargarProductos, 
-    aplicarFiltros, 
-    cargarOpcionesPanel,
+    actualizarPanelesDeFiltros, 
+    seleccionarFiltro, 
     limpiarFiltros,
     filtrosGlobales 
-} from '/Scrips/client.js?v=5.0'; // Sube la versión a 5.0
+} from '/Scrips/client.js'; 
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- SELECTORES (Mantenidos) ---
+    // --- UI Elements ---
     const menuBtn = document.getElementById('menu-toggle-btn');
     const navMenu = document.getElementById('nav-links-menu');
     const closeMenuBtn = document.getElementById('close-menu-btn');
+    
     const openFilterBtn = document.getElementById('open-filter-btn');
-    const filterSidebar = document.getElementById('filter-sidebar');
-    const panelContainer = document.getElementById('panel-container');
-    const applyFilterBtn = document.getElementById('filter-btn-apply');
-    const clearFilterBtn = document.getElementById('filter-btn-clear');
-    const searchForm = document.getElementById('catalog-search'); // Corregido: el ID en catalogo.html es 'catalog-search'
-    const searchInput = document.querySelector('#catalog-search .search-input'); // Aseguramos el selector
+    const filterSidebar = document.getElementById('filter-sidebar'); 
     const overlay = document.getElementById('overlay');
+    const clearFilterBtn = document.getElementById('filter-btn-clear');
 
-    // --- Funciones de Paneles (Mantenidas) ---
-    function openNavMenu() { /* ... */ if (navMenu) navMenu.classList.add('active'); if (overlay) overlay.classList.add('active');}
-    function closeNavMenu() { /* ... */ if (navMenu) navMenu.classList.remove('active'); if (overlay) overlay.classList.remove('active');}
-    function openFilterMenu() { if (filterSidebar) filterSidebar.classList.add('active'); if (overlay) overlay.classList.add('active');}
-    function closeFilterMenu() { if (filterSidebar) filterSidebar.classList.remove('active'); if (overlay) overlay.classList.remove('active');}
+    const searchForm = document.getElementById('catalog-search'); 
+    const searchInput = document.querySelector('#catalog-search .search-input'); 
 
-    // Función para animar el deslizamiento de paneles (Mantenida)
-    function navegarA(panelId) {
-        if (!panelContainer) return;
-        const paneles = panelContainer.querySelectorAll('.filter-panel');
-        paneles.forEach(p => {
-            p.classList.remove('active', 'parent');
-            if (p.id === panelId) p.classList.add('active');
-        });
-        
-        let panelActual = panelContainer.querySelector(`#${panelId}`);
-        if (!panelActual) return;
-        
-        let backBtn = panelActual.querySelector('.panel-back-btn');
-        let panelAnterior = backBtn ? panelContainer.querySelector(`#${backBtn.dataset.target}`) : null;
-        
-        while (panelAnterior) {
-            panelAnterior.classList.add('parent');
-            backBtn = panelAnterior.querySelector('.panel-back-btn');
-            panelAnterior = backBtn ? panelContainer.querySelector(`#${backBtn.dataset.target}`) : null;
-        }
-    }
+    // --- Funciones Visuales ---
+    const toggleMenu = (show) => {
+        if(navMenu) navMenu.classList.toggle('active', show);
+        if(overlay) overlay.classList.toggle('active', show);
+    };
+    const toggleFilter = (show) => {
+        if(filterSidebar) filterSidebar.classList.toggle('active', show);
+        if(overlay) overlay.classList.toggle('active', show);
+    };
 
-    // --- Lógica de PÁGINA DE CATÁLOGO ---
+    // --- LÓGICA DEL CATÁLOGO ---
     if (document.getElementById('catalogo-container')) {
-        cargarProductos(); 
+        console.log("Iniciando Catálogo...");
         
-        // Carga inicial del primer panel de filtros
-        cargarOpcionesPanel('type', 'lista-type'); // Columna 'type', ID 'lista-type'
+        // 1. Carga Inicial
+        cargarProductos(); 
+        actualizarPanelesDeFiltros(); 
 
-        // Listener para navegar ENTRE paneles
-        if (panelContainer) {
-            panelContainer.addEventListener('click', (e) => {
-                const link = e.target.closest('.nav-link');
-                const backBtn = e.target.closest('.panel-back-btn');
-                const checkbox = e.target.closest('#lista-categoria .filter-checkbox'); 
+        // 2. EVENT DELEGATION (Detectar clicks en filtros dinámicos)
+        document.addEventListener('click', (e) => {
+            const filterItem = e.target.closest('.filter-item');
+            
+            if (filterItem && !filterItem.classList.contains('bloqueado')) {
+                e.preventDefault();
+                const col = filterItem.dataset.columna;
+                const val = filterItem.dataset.valor;
                 
-                // 1. Navegación HACIA ADELANTE
-                if (link) {
-                    const columna = link.dataset.columna;
-                    const valor = link.dataset.valor;
-                    
-                    filtrosGlobales[columna] = valor; 
-
-                    let siguientePanelId, siguienteColumna, listaId;
-                    
-                    // *** NUEVA JERARQUÍA: type > engaste > genero > categoria ***
-                    if (columna === 'type') {
-                        siguientePanelId = 'panel-engaste'; 
-                        siguienteColumna = 'engaste';      
-                        listaId = 'lista-engaste';
-                    } else if (columna === 'engaste') { 
-                        siguientePanelId = 'panel-genero'; 
-                        siguienteColumna = 'genero';       
-                        listaId = 'lista-genero';
-                    } else if (columna === 'genero') { 
-                        siguientePanelId = 'panel-categoria';
-                        siguienteColumna = 'categoria';
-                        listaId = 'lista-categoria';
-                    }
-                    
-                    if (siguientePanelId) {
-                        cargarOpcionesPanel(siguienteColumna, listaId);
-                        navegarA(siguientePanelId);
-                    }
+                if (col && val) {
+                    seleccionarFiltro(col, val);
                 }
-                
-                // 2. Navegación HACIA ATRÁS (Corregido el bug del panel en blanco)
-                if (backBtn) {
-                    const targetPanelId = backBtn.dataset.target;
-                    
-                    const panelActual = backBtn.closest('.filter-panel');
+            }
+        });
 
-                    // Lógica de borrado de filtros con la nueva jerarquía
-                    if (panelActual.id === 'panel-engaste') delete filtrosGlobales.type;
-                    if (panelActual.id === 'panel-genero') delete filtrosGlobales.engaste;
-                    if (panelActual.id === 'panel-categoria') {
-                         delete filtrosGlobales.genero;
-                         delete filtrosGlobales.categoria; // Limpia los checkboxes
-                    }
-
-                    
-                    // Recarga las opciones del panel destino para que no esté vacío (SOLUCIÓN)
-                    let columnaDestino = targetPanelId.replace('panel-', '');
-                    let listaDestinoId = `lista-${columnaDestino}`;
-                    
-                    // Se usa la columna directamente
-                    cargarOpcionesPanel(columnaDestino, listaDestinoId);
-                    
-                    navegarA(targetPanelId);
-                }
-                
-                // 3. Aplicar al instante en Categoría (Mantenida)
-                if (checkbox) {
-                    aplicarFiltros();
-                }
-            });
-        }
-
-        // Botones de acción de filtros (APLICAR / LIMPIAR)
-        if (applyFilterBtn) {
-            applyFilterBtn.addEventListener('click', () => {
-                aplicarFiltros(); 
-                closeFilterMenu();
-            });
-        }
-
+        // 3. Botón Limpiar (Móvil)
         if (clearFilterBtn) {
             clearFilterBtn.addEventListener('click', () => {
                 limpiarFiltros();
-                // Resetea los paneles y recarga el primer nivel
-                navegarA('panel-type');
-                cargarOpcionesPanel('type', 'lista-type');
-                closeFilterMenu();
+                toggleFilter(false);
             });
         }
     }
 
-    // --- Listeners Generales ---
-    const header = document.querySelector('header');
-    if (header) {
-        header.classList.add('sticky-nav');
-    }
-    if (menuBtn) menuBtn.addEventListener('click', openNavMenu);
-    if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeNavMenu);
-    if (openFilterBtn) openFilterBtn.addEventListener('click', openFilterMenu);
-    
-    if (searchForm) {
-        searchForm.addEventListener('submit', (e) => e.preventDefault());
-    }
-    if (searchInput) {
-        searchInput.addEventListener('input', aplicarFiltros);
-    }
+    // --- LISTENERS GENERALES ---
+    if (menuBtn) menuBtn.addEventListener('click', () => toggleMenu(true));
+    if (closeMenuBtn) closeMenuBtn.addEventListener('click', () => toggleMenu(false));
+    if (openFilterBtn) openFilterBtn.addEventListener('click', () => toggleFilter(true));
     
     if (overlay) {
         overlay.addEventListener('click', () => {
-            closeNavMenu();
-            closeFilterMenu();
+            toggleMenu(false);  
+            toggleFilter(false);
         });
     }
+
+    // Búsqueda
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const val = e.target.value.trim();
+            filtrosGlobales.search_term = val !== '' ? val : null;
+            cargarProductos();
+        });
+    }
+    if (searchForm) {
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if(searchInput) searchInput.blur();
+        });
+    }
+});
+const btn = document.querySelector('.btn-submit');
+const form = document.getElementById('form-contacto');
+
+form.addEventListener('submit', function(event) {
+   event.preventDefault(); // Evita que la página se recargue
+
+   btn.textContent = 'Enviando...';
+   const serviceID = 'default_service'; // Reemplaza con tu Service ID real de EmailJS
+   const templateID = 'template_xxxxx'; // Reemplaza con tu Template ID real de EmailJS
+
+   emailjs.sendForm(serviceID, templateID, this)
+    .then(() => {
+        btn.textContent = 'Enviar Mensaje';
+        
+        // Alerta bonita de éxito
+        Swal.fire({
+            title: '¡Mensaje Enviado!',
+            text: 'Nos pondremos en contacto contigo pronto.',
+            icon: 'success',
+            confirmButtonColor: '#122033'
+        });
+        
+        form.reset(); // Limpia el formulario
+    }, (err) => {
+        btn.textContent = 'Enviar Mensaje';
+        
+        // Alerta de error
+        Swal.fire({
+            title: 'Error',
+            text: 'Hubo un problema al enviar el mensaje. Intenta nuevamente.',
+            icon: 'error',
+            confirmButtonColor: '#122033'
+        });
+        console.error(JSON.stringify(err));
+    });
 });

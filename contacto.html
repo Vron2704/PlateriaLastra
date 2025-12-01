@@ -25,56 +25,183 @@
             </button>
         </nav>
             <ul class="nav-links" id="nav-links-menu">
-                    <li class="nav-menu-header">
-                        <span class="menu-title">Menú</span>
-                        <button class="close-menu-btn" id="close-menu-btn" aria-label="Cerrar menú">
-                            &times; </button>
-                    </li>
-                    <li><a href="/index.html" class="active">Inicio</a></li> 
-                    <li><a href="/catalogo.html">Catálogo</a></li>
-                    <li><a href="/nosotros.html">Nosotras</a></li>
-                    <li><a href="/contacto.html">Contacto</a></li>
-            </ul>
+    
+    <li class="nav-menu-header">
+        <span class="menu-title">Menú</span>
+        <button class="close-menu-btn" id="close-menu-btn" aria-label="Cerrar menú">
+            <i class="fas fa-times"></i>
+        </button>
+    </li>
+
+    <li><a href="/index.html" class="nav-item">Inicio</a></li>
+    <li class="dropdown" >
+        <a href="catalogo.html" class="dropbtn">
+            Catálogo
+            </a>
+            <div class="dropdown-content">
+                <a href="catalogo.html?type=Anillo">Anillos</a>
+  
+                <a href="catalogo.html?type=Dije" onclick="aplicarFiltroDesdeMenu(event, 'Dije')">Dijes</a>
+                </div>
+                </li>
+    <li class="dropdown-mobile">
+        <div class="accordion-header">
+            <span class="nav-item">Catálogo</span>
+            <i class="fas fa-chevron-down arrow-icon"></i>
+        </div>
+        
+        <ul class="dropdown-content-mobile">
+            <li><a href="catalogo.html">Ver todo</a></li>
+            <li><a href="catalogo.html?type=Anillo">Anillos</a></li>
+            <li><a href="catalogo.html?type=Dije">Dijes</a></li>
+        </ul>
+    </li>
+
+    <li><a href="/nosotros.html" class="nav-item">Nosotras</a></li>
+    <li><a href="/contacto.html" class="active" class="nav-item">Contacto</a></li>
+</ul>
             
         <div class="overlay" id="overlay"></div>
     </header>
 
-    <main>
+    <section class="contact-section">
+    <div class="contact-container">
         
-        <section class="hero">
-            <div class="hero-content">
-                <p class="texto-casting">Amplia<br>variedad de<br>ceras para<br>casting</p>
-                <a href="/catalogo.html" class="cta-button">Catálogo</a>
+        <div class="contact-info-box">
+            <h2 class="section-title">Contactanos</h2>
+            <p class="contact-desc">
+                ¿Tienes alguna duda sobre una cera o deseas un diseño personalizado? 
+                Estamos aquí para ayudarte.
+            </p>
+            
+            <div class="info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <div>
+                    <h4>Ubicación</h4>
+                    <p>Ica No 242 Int. 311, Lima, Lima </p>
+                </div>
             </div>
-        </section>
-        <section class="intro">
-            <h2>Bienvenido a Plateria Lastra</h2>
-            <p>En Plateria Lastra, nos especializamos en ofrecer ceras de alta calidad para todas tus necesidades de joyería. Ya seas un artesano experimentado o un principiante entusiasta, nuestra amplia gama de productos está diseñada para ayudarte a crear piezas excepcionales.</p>
-    </main>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Sobre Plateria Lastra</h4>
-                <ul>
-                <li><a href="/nosotros.html">Nosotros</a></li>
-                </ul>
+            <div class="info-item">
+                <i class="fas fa-phone-alt"></i>
+                <div>
+                    <h4>Teléfono</h4>
+                    <p>+51 923 979 139</p>
+                </div>
             </div>
-            <div class="footer-section">
-                <h4>Enlaces Rápidos</h4>
-                <ul>
-                    <li><a href="#">Contacto</a></li>
-                </ul>
+
+            <div class="info-item">
+                <i class="fas fa-envelope"></i>
+                <div>
+                    <h4>Email</h4>
+                    <p>contacto@platerialastra.com</p>
+                </div>
             </div>
-            <div class="footer-section">
-                <h4>Síguenos</h4>
-                <p>Instagram | Facebook | Pinterest</p>
+
+            <div class="social-links-contact">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 Plateria Lastra. Todos los derechos reservados.</p>
+
+        <div class="contact-form-box">
+            <form id="form-contacto">
+                <div class="input-group">
+                    <label for="user_name">Nombre completo</label>
+                    <input type="text" name="user_name" id="user_name" required placeholder="Ej: Juan Pérez">
+                </div>
+
+                <div class="input-group">
+                    <label for="user_email">Correo electrónico</label>
+                    <input type="email" name="user_email" id="user_email" required placeholder="ejemplo@correo.com">
+                </div>
+
+                <div class="input-group">
+                    <label for="subject">Asunto</label>
+                    <input type="text" name="subject" id="subject" required placeholder="Consulta sobre anillos">
+                </div>
+
+                <div class="input-group">
+                    <label for="message">Mensaje</label>
+                    <textarea name="message" id="message" rows="5" required placeholder="Escribe tu mensaje aquí..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    Enviar Mensaje <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
         </div>
-    </footer>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+<script type="text/javascript">
+   // INICIALIZACIÓN DE EMAILJS
+   // IMPORTANTE: Debes registrarte gratis en emailjs.com para obtener tu "Public Key"
+   (function(){
+      emailjs.init("TU_PUBLIC_KEY_AQUI"); 
+   })();
+</script>
+
+    <footer class="footer-elegante">
+    <div class="footer-container">
+        <div class="footer-col">
+            <h3 class="footer-heading">Sobre Platería Lastra</h3>
+            <p class="footer-text">
+                Artesanía y tradición en cada pieza. Creamos joyería y orfebrería de plata con diseños exclusivos y la máxima calidad desde hace generaciones.
+            </p>
+        </div>
+
+        <div class="footer-col">
+            <h3 class="footer-heading">Enlaces Rápidos</h3>
+            <ul class="footer-links">
+                <li><a href="#">Nosotros</a></li>
+                <li><a href="#">Catálogo</a></li>
+                <li><a href="#">Cuidado de la Plata</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h3 class="footer-heading">Síguenos</h3>
+            <div class="social-icons">
+                <a href="#" class="social-link" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="social-link" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="social-link" aria-label="Pinterest">
+                    <i class="fab fa-pinterest-p"></i>
+                </a>
+            </div>
+            <div class="contact-info">
+                <p><i class="fas fa-envelope"></i> info@platerialastra.com</p>
+            </div>
+        </div>
+
+        <div class="footer-col footer-map-col">
+            <h3 class="footer-heading">Visítanos</h3>
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1950.9792617861249!2d-77.0329620136131!3d-12.04637479570808!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8b5fdf16bb3%3A0x6e9cef40d0255182!2sJir%C3%B3n%20Ica%20198%2C%20Lima%2015001!5e0!3m2!1ses!2spe!4v1764587487363!5m2!1ses!2spe"
+                    height="150" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2025 Platería Lastra. Todos los derechos reservados.</p>
+    </div>
+</footer>
 
     <script type="module" src="/Scrips/main.js"></script>
     <script type="module" src="/Scrips/client.js"></script>
